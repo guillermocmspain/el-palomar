@@ -55,7 +55,7 @@ function animateAsset(image) {
   }
   function refresh() {
     if (button) {
-      button.textContent = paused ? '▶' : 'Ⅱ';
+      button.textContent = detail ? (paused ? 'Girar el huevo' : 'Pausar giro') : (paused ? '▶' : 'Ⅱ');
       button.setAttribute('aria-label',detail ? button.textContent : (paused?'Reproducir movimiento':'Pausar movimiento'));
     }
     if (!visible || paused || document.hidden || !ready) {
