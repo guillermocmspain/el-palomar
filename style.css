@@ -126,3 +126,7 @@
     .top .brand-link img{width:72px}
   }
 }
+
+footer{display:block}.footer-main{display:flex;align-items:center;justify-content:space-between;gap:24px}.legal-links{border-top:1px solid #ffffff45;margin-top:28px;padding:12px 0}.legal-links a{text-decoration:underline;font-weight:400}.funding{border-top:1px solid #ffffff45;padding-top:26px}.funding>img{width:100%;max-width:1180px;height:auto;margin:auto}.funding-mobile{display:none}
+.legal-page{max-width:850px;padding:clamp(76px,9vw,140px) var(--gutter);margin:auto;box-sizing:content-box}.legal-page h1{font-size:clamp(2.8rem,6vw,5.8rem)}.legal-page h2{font-size:clamp(1.65rem,3vw,2.2rem);margin:40px 0 14px}.legal-page p{max-width:70ch}.legal-page p+p{margin-top:12px}.legal-page a{overflow-wrap:anywhere}
+@media(max-width:700px){.footer-main{display:grid}.legal-links{gap:0 16px}.funding>img{display:none}.funding-mobile{max-width:380px;margin:auto;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px 4%}.funding-mobile svg{display:block;overflow:hidden;max-width:100%;height:auto}.funding-mobile svg:first-child{width:90%;margin:0 4% 4px}.funding-mobile svg:nth-child(2){width:37%}.funding-mobile svg:nth-child(3){width:54%}.funding-mobile svg:nth-child(n+4){width:27%}}
