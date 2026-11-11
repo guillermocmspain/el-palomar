@@ -92,3 +92,35 @@ function dismissMobileMenu() {
 }
 matchMedia('(max-width:700px)').addEventListener('change',dismissMobileMenu);
 window.addEventListener('pageshow',dismissMobileMenu);
+
+const chapters = [...document.querySelectorAll('.calibre-chapter')];
+if (chapters.length) {
+  const animateScroll = matchMedia('(prefers-reduced-motion:no-preference) and (min-height:480px)');
+  let scheduled = false;
+  function drawChapters() {
+    scheduled = false;
+    document.documentElement.classList.toggle('walk-enabled', animateScroll.matches);
+    for (const chapter of chapters) {
+      if (!animateScroll.matches) {
+        chapter.style.removeProperty('--grow');
+        chapter.style.removeProperty('--rise');
+        continue;
+      }
+      const bounds = chapter.getBoundingClientRect();
+      const viewport = chapter.firstElementChild.offsetHeight;
+      if (bounds.bottom < 0 || bounds.top > innerHeight) continue;
+      const distance = Math.max(1, bounds.height - viewport);
+      const p = Math.min(1, Math.max(0, (.32 * viewport - bounds.top) / (distance + .32 * viewport)));
+      const ease = p * p * (3 - 2 * p);
+      chapter.style.setProperty('--grow', (.64 + .48 * ease).toFixed(4));
+      chapter.style.setProperty('--rise', ((1-ease)*Math.min(112,viewport*.12)).toFixed(1)+'px');
+    }
+  }
+  function queueChapters() {
+    if (!scheduled) { scheduled=true; requestAnimationFrame(drawChapters); }
+  }
+  drawChapters();
+  addEventListener('scroll',queueChapters,{passive:true});
+  addEventListener('resize',queueChapters);
+  animateScroll.addEventListener('change',queueChapters);
+}

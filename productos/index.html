@@ -53,9 +53,48 @@
   }
 }
 @media(prefers-reduced-motion:reduce){.mobile-sheet,.burger span{transition:none}}
-</style><script defer src="../app.js?v=menu1"></script></head>
+
+.walkthrough{background:#344331;color:#fffaf0}
+.walk-heading{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:clamp(42px,6vw,86px) var(--gutter) 34px}
+.walk-heading nav{display:flex;gap:6px}.walk-heading nav a{border:1px solid #d4d9c488;border-radius:50%;width:44px;height:44px;display:grid;place-items:center;text-decoration:none;font:600 .86rem Arial,sans-serif}.walk-heading nav a:hover{background:#fffaf0;color:#344331}
+.calibre-chapter{scroll-margin-top:66px}.calibre-frame{position:relative;isolation:isolate;background:#344331;overflow:hidden}
+.calibre-frame::before{content:'';position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,#25342299,#223020e8),url('../assets/pradera.avif') center/cover}
+.calibre-chapter:nth-of-type(even) .calibre-frame::before{background-image:linear-gradient(90deg,#223020e8,#25342299),url('../assets/pradera.avif')}
+.calibre-layout{margin:auto;width:min(1120px,89%);display:grid;grid-template-columns:1fr 1fr;gap:7%;align-items:center;min-height:min(82svh,850px);padding:60px 0}
+.calibre-chapter:nth-of-type(even) .shell-space{order:2}
+.shell-space{display:grid;place-items:center}.shell-model{position:relative;height:calc(clamp(230px,49svh,510px) * var(--proportion));transform:scale(var(--grow,1));transform-origin:center}.shell-model img{width:auto;height:100%;max-width:100%;object-fit:contain}
+.calibre-copy{transform:translateY(var(--rise,0px))}.calibre-copy .kicker{color:#e5e9d4}.calibre-copy h3{font:400 clamp(3rem,6.7vw,7rem)/1 Georgia,serif;letter-spacing:-.055em;margin-bottom:18px}.calibre-copy .calibre-weight{font:400 clamp(1.25rem,2.1vw,2rem)/1.3 Georgia,serif;margin-bottom:12px}
+.calibre-copy .button{background:#f8f5ed;color:#293424}.walkthrough a:focus-visible{outline-color:#ffdf93}
+@media(prefers-reduced-motion:no-preference) and (min-height:480px){.walk-enabled .calibre-chapter{height:155svh}.walk-enabled .calibre-frame{position:sticky;top:0}.walk-enabled .calibre-layout{min-height:100svh}}
+@media(max-width:700px){.walk-heading{gap:18px}.calibre-layout{grid-template-columns:1fr;align-content:center;gap:22px;text-align:center;padding:68px 0 28px}.calibre-chapter:nth-of-type(even) .shell-space{order:0}.shell-model{height:calc(min(35svh,300px) * var(--proportion))}.calibre-copy p{margin-inline:auto}.calibre-copy h3{font-size:clamp(2.8rem,9vw,4rem);margin-bottom:8px}.calibre-copy .kicker{margin-bottom:8px}.calibre-copy .button{margin-top:14px}.calibre-chapter .calibre-frame::before,.calibre-chapter:nth-of-type(even) .calibre-frame::before{background:linear-gradient(0deg,#233122f7,#28392388),url('../assets/pradera-vertical.avif') center/cover}}
+</style><script defer src="../app.js?v=calibres2"></script></head>
 <body class="inside"><a class="skip" href="#principal">Saltar al contenido</a><header class="top"><a class="word" href="../">El Palomar</a><nav aria-label="Principal"><a href="../">Inicio</a><a href="../productos/" aria-current="page">Productos</a><a href="../historia/">Historia</a><a href="../contacto/">Contacto</a></nav></header>
 <button class="burger" type="button" popovertarget="mobile-menu" aria-label="Menú principal" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
 <div class="mobile-sheet" id="mobile-menu" popover="auto"><div class="sheet-head"><a class="word" href="../">El Palomar</a><button type="button" class="sheet-close" aria-label="Cerrar menú" popovertarget="mobile-menu" popovertargetaction="hide">×</button></div><nav aria-label="Menú móvil"><a href="../">Inicio</a><a href="../productos/" aria-current="page">Productos</a><a href="../historia/">Historia</a><a href="../contacto/">Contacto</a></nav></div>
-<main id="principal"><section class="collection"><p class="kicker">El catálogo</p><h1>Nuestros <em>huevos.</em></h1><p>Cuatro calibres, ordenados por peso. Elige el tuyo para ver su ficha.</p><div class="eggs"><a class="egg" href="../productos/s/"><span class="shelf"><img width="224" height="280" style="--size:62%" loading="lazy" src="../assets/cascaron-s.avif" data-turn="../assets/cascaron-s-giro.webp" alt=""></span><span class="eggname">Calibre S<span aria-hidden="true">↗</span></span><span>Pequeño · menos de 53 g</span></a><a class="egg" href="../productos/m/"><span class="shelf"><img width="224" height="280" style="--size:74%" loading="lazy" src="../assets/cascaron-m.avif" data-turn="../assets/cascaron-m-giro.webp" alt=""></span><span class="eggname">Calibre M<span aria-hidden="true">↗</span></span><span>Mediano · 53 a menos de 63 g</span></a><a class="egg" href="../productos/l/"><span class="shelf"><img width="224" height="280" style="--size:86%" loading="lazy" src="../assets/cascaron-l.avif" data-turn="../assets/cascaron-l-giro.webp" alt=""></span><span class="eggname">Calibre L<span aria-hidden="true">↗</span></span><span>Grande · 63 a menos de 73 g</span></a><a class="egg" href="../productos/xl/"><span class="shelf"><img width="224" height="280" style="--size:98%" loading="lazy" src="../assets/cascaron-xl.avif" data-turn="../assets/cascaron-xl-giro.webp" alt=""></span><span class="eggname">Calibre XL<span aria-hidden="true">↗</span></span><span>Muy grande · 73 g o más</span></a></div></section><section class="formats"><h2>Dos formas de llevarlos.</h2><div><h3>Caja de docena</h3><p>Doce huevos en una huevera.</p></div><div><h3>Formato 6 + 6</h3><p>Dos medias docenas en un estuche dividido.</p></div><p class="note">Trabajamos con todos los calibres. El envasado se ajusta al peso mínimo indicado en el estuche para la docena o la media docena.</p></section></main>
+<main id="principal"><section class="walkthrough"><div class="walk-heading"><h1>Cuatro <em>calibres.</em></h1>
+      <nav aria-label="Elegir calibre"><a href="#calibre-s" aria-label="Ir al calibre S">S</a><a href="#calibre-m" aria-label="Ir al calibre M">M</a><a href="#calibre-l" aria-label="Ir al calibre L">L</a><a href="#calibre-xl" aria-label="Ir al calibre XL">XL</a></nav></div><article class="calibre-chapter" id="calibre-s" style="--proportion:0.76">
+          <div class="calibre-frame"><div class="calibre-layout">
+            <div class="shell-space"><div class="shell-model"><img loading="lazy" src="../assets/cascaron-s.avif" data-turn="../assets/cascaron-s-giro.webp" width="224" height="280" alt="Huevo campero de calibre S"></div></div>
+            <div class="calibre-copy"><p class="kicker">Huevo campero · Pequeño</p><h3>Calibre <em>S.</em></h3>
+            <p class="calibre-weight">Menos de 53 g por huevo</p><p>En caja de docena o en estuche de 6 + 6.</p>
+            <a class="button" href="../productos/s/">Ver producto S <span aria-hidden="true">↗</span></a></div>
+          </div></div></article><article class="calibre-chapter" id="calibre-m" style="--proportion:0.84">
+          <div class="calibre-frame"><div class="calibre-layout">
+            <div class="shell-space"><div class="shell-model"><img loading="lazy" src="../assets/cascaron-m.avif" data-turn="../assets/cascaron-m-giro.webp" width="224" height="280" alt="Huevo campero de calibre M"></div></div>
+            <div class="calibre-copy"><p class="kicker">Huevo campero · Mediano</p><h3>Calibre <em>M.</em></h3>
+            <p class="calibre-weight">53 a menos de 63 g por huevo</p><p>En caja de docena o en estuche de 6 + 6.</p>
+            <a class="button" href="../productos/m/">Ver producto M <span aria-hidden="true">↗</span></a></div>
+          </div></div></article><article class="calibre-chapter" id="calibre-l" style="--proportion:0.92">
+          <div class="calibre-frame"><div class="calibre-layout">
+            <div class="shell-space"><div class="shell-model"><img loading="lazy" src="../assets/cascaron-l.avif" data-turn="../assets/cascaron-l-giro.webp" width="224" height="280" alt="Huevo campero de calibre L"></div></div>
+            <div class="calibre-copy"><p class="kicker">Huevo campero · Grande</p><h3>Calibre <em>L.</em></h3>
+            <p class="calibre-weight">63 a menos de 73 g por huevo</p><p>En caja de docena o en estuche de 6 + 6.</p>
+            <a class="button" href="../productos/l/">Ver producto L <span aria-hidden="true">↗</span></a></div>
+          </div></div></article><article class="calibre-chapter" id="calibre-xl" style="--proportion:1.00">
+          <div class="calibre-frame"><div class="calibre-layout">
+            <div class="shell-space"><div class="shell-model"><img loading="lazy" src="../assets/cascaron-xl.avif" data-turn="../assets/cascaron-xl-giro.webp" width="224" height="280" alt="Huevo campero de calibre XL"></div></div>
+            <div class="calibre-copy"><p class="kicker">Huevo campero · Muy grande</p><h3>Calibre <em>XL.</em></h3>
+            <p class="calibre-weight">73 g o más por huevo</p><p>En caja de docena o en estuche de 6 + 6.</p>
+            <a class="button" href="../productos/xl/">Ver producto XL <span aria-hidden="true">↗</span></a></div>
+          </div></div></article></section><section class="formats"><h2>Dos formas de llevarlos.</h2><div><h3>Caja de docena</h3><p>Doce huevos en una huevera.</p></div><div><h3>Formato 6 + 6</h3><p>Dos medias docenas en un estuche dividido.</p></div><p class="note">Trabajamos con todos los calibres. El envasado se ajusta al peso mínimo indicado en el estuche para la docena o la media docena.</p></section></main>
 <footer><div><a class="word" href="../">El Palomar</a><p>Huevos camperos de Martín Miguel, Segovia.</p></div><nav aria-label="Pie de página"><a href="../">Inicio</a><a href="../productos/" aria-current="page">Productos</a><a href="../historia/">Historia</a><a href="../contacto/">Contacto</a></nav></footer></body></html>

@@ -16,7 +16,7 @@ def page(route, title, description, content):
     css = (ROOT/'style.css').read_text(encoding='utf-8').replace("url('assets/", f"url('{prefix}assets/")
     document = f'''<!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8f5ed">
-<noscript><style>.scroll-scene{{height:auto}}.sticky{{position:relative}}.sticky>.intro,.pause{{display:none}}.home .top{{position:sticky;left:auto;transform:none;visibility:visible}}.scrolled .center{{visibility:visible}}</style></noscript><title>{title} · El Palomar</title><meta name="description" content="{escape(description)}"><link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml"><style>{css}</style><script defer src="{prefix}app.js?v=menu1"></script></head>
+<noscript><style>.scroll-scene{{height:auto}}.sticky{{position:relative}}.sticky>.intro,.pause{{display:none}}.home .top{{position:sticky;left:auto;transform:none;visibility:visible}}.scrolled .center{{visibility:visible}}</style></noscript><title>{title} · El Palomar</title><meta name="description" content="{escape(description)}"><link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml"><style>{css}</style><script defer src="{prefix}app.js?v=calibres2"></script></head>
 <body class="{body_class}"><a class="skip" href="#principal">Saltar al contenido</a><header class="top"><a class="word" href="{prefix}">El Palomar</a><nav aria-label="Principal">{navigation}</nav></header>
 <button class="burger" type="button" popovertarget="mobile-menu" aria-label="Menú principal" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
 <div class="mobile-sheet" id="mobile-menu" popover="auto"><div class="sheet-head"><a class="word" href="{prefix}">El Palomar</a><button type="button" class="sheet-close" aria-label="Cerrar menú" popovertarget="mobile-menu" popovertargetaction="hide">×</button></div><nav aria-label="Menú móvil">{navigation}</nav></div>
@@ -35,6 +35,22 @@ def catalog(exclude=None):
         cards.append(f'''<a class="egg" href="@/productos/{slug}/"><span class="shelf"><img width="224" height="280" style="--size:{62+12*i}%" loading="lazy" src="@/assets/cascaron-{slug}.avif" data-turn="@/assets/cascaron-{slug}-giro.webp" alt=""></span><span class="eggname">Calibre {size}<span aria-hidden="true">↗</span></span><span>{kind} · {weight}</span></a>''')
     return '<div class="eggs">'+''.join(cards)+'</div>'
 
+def product_walkthrough(heading):
+    chapters = []
+    links = []
+    for index, (size, weight, kind) in enumerate(SIZES):
+        slug = size.lower()
+        links.append(f'<a href="#calibre-{slug}" aria-label="Ir al calibre {size}">{size}</a>')
+        chapters.append(f'''<article class="calibre-chapter" id="calibre-{slug}" style="--proportion:{.76 + .08 * index:.2f}">
+          <div class="calibre-frame"><div class="calibre-layout">
+            <div class="shell-space"><div class="shell-model"><img loading="lazy" src="@/assets/cascaron-{slug}.avif" data-turn="@/assets/cascaron-{slug}-giro.webp" width="224" height="280" alt="Huevo campero de calibre {size}"></div></div>
+            <div class="calibre-copy"><p class="kicker">Huevo campero · {kind}</p><h3>Calibre <em>{size}.</em></h3>
+            <p class="calibre-weight">{weight.capitalize()} por huevo</p><p>En caja de docena o en estuche de 6 + 6.</p>
+            <a class="button" href="@/productos/{slug}/">Ver producto {size} <span aria-hidden="true">↗</span></a></div>
+          </div></div></article>''')
+    return f'''<section class="walkthrough"><div class="walk-heading"><{heading}>Cuatro <em>calibres.</em></{heading}>
+      <nav aria-label="Elegir calibre">{''.join(links)}</nav></div>{''.join(chapters)}</section>'''
+
 story='''<section class="story"><div class="portrait"><img width="375" height="750" loading="lazy" src="@/assets/cobriza.avif" data-motion="@/assets/cobriza-viva.webp" alt="Gallina de plumaje cobrizo de El Palomar"><button type="button" class="motion-control" aria-label="Pausar la gallina">Ⅱ</button></div><div><p class="kicker">Nuestra historia</p><h2>Todo empieza en <em>Martín Miguel.</em></h2><p>En este pueblo de Segovia nace El Palomar. El proyecto recupera una forma cercana de producir huevos, con el cuidado diario de las gallinas en el centro.</p><a class="button" href="@/historia/">Conocer la historia <span>↗</span></a></div></section>'''
 formats='''<section class="formats"><h2>Dos formas de llevarlos.</h2><div><h3>Caja de docena</h3><p>Doce huevos en una huevera.</p></div><div><h3>Formato 6 + 6</h3><p>Dos medias docenas en un estuche dividido.</p></div><p class="note">Trabajamos con todos los calibres. El envasado se ajusta al peso mínimo indicado en el estuche para la docena o la media docena.</p></section>'''
 intro='''<section class="intro" id="proyecto"><p class="kicker">El proyecto</p><h2>Del campo <em>a la mesa.</em></h2><p>En El Palomar criamos gallinas camperas en Martín Miguel, Segovia. Cuidamos su alimentación y su entorno a lo largo de todo el ciclo de cría.</p></section>'''
@@ -43,8 +59,8 @@ hero='''<div class="scroll-scene"><section class="sticky"><div class="landscape"
 <div class="hero-copy"><p class="place">Martín Miguel <span> / </span> Segovia</p><h1>Huevos <em>camperos.</em></h1></div>
 <nav class="center" aria-label="Portada"><a href="@/productos/">Productos</a><a class="brand" href="@/" aria-label="El Palomar, inicio"><img src="@/assets/marca.webp" width="326" height="65" alt="El Palomar"></a><a href="@/historia/">Historia</a></nav>
 <button class="pause" type="button" aria-label="Pausar movimiento">Ⅱ</button><a class="down" href="#presentacion" aria-label="Descubrir el proyecto">↓</a></section><span id="presentacion"></span></div>'''
-page('', 'Huevos camperos de Martín Miguel', 'Descubre El Palomar, su historia y su catálogo de huevos camperos en cuatro calibres.', hero.replace('INTRO',intro)+'<section class="collection"><p class="kicker">Nuestros productos</p><h2>Cuatro <em>calibres.</em></h2><p>Del más pequeño al más grande. Elige un huevo para ver su peso y sus formatos.</p>'+catalog()+'</section>'+story)
-page('productos','Productos','Catálogo de huevos camperos S, M, L y XL con pesos y formatos de envasado.','<section class="collection"><p class="kicker">El catálogo</p><h1>Nuestros <em>huevos.</em></h1><p>Cuatro calibres, ordenados por peso. Elige el tuyo para ver su ficha.</p>'+catalog()+'</section>'+formats)
+page('', 'Huevos camperos de Martín Miguel', 'Descubre El Palomar, su historia y su catálogo de huevos camperos en cuatro calibres.', hero.replace('INTRO',intro)+product_walkthrough('h2')+story)
+page('productos','Productos','Catálogo de huevos camperos S, M, L y XL con pesos y formatos de envasado.',product_walkthrough('h1')+formats)
 for size, weight, kind in SIZES:
     slug=size.lower()
     page('productos/'+slug,'Huevo campero calibre '+size, f'Huevo campero {kind.lower()}, calibre {size}, de {weight}. Consulta sus formatos.',f'''<article class="detail"><div class="sample"><img width="224" height="280" src="@/assets/cascaron-{slug}.avif" data-turn="@/assets/cascaron-{slug}-giro.webp" alt="Huevo campero calibre {size}"><button type="button" class="turn-control">Girar el huevo</button></div><div><a href="@/productos/">← Todos los productos</a><p class="kicker">Huevo campero · {kind}</p><h1>Calibre <em>{size}.</em></h1><p class="weight">{weight.capitalize()} por huevo</p><p>Disponible en caja de docena y en formato de 6 + 6. Consulta la disponibilidad directamente con la granja.</p><a class="button" href="@/contacto/">Consultar a la granja ↗</a></div></article>'''+formats+'<section class="related"><h2>Otros <em>calibres.</em></h2>'+catalog(size)+'</section>')
