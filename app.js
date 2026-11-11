@@ -174,28 +174,3 @@ if (chapters.length) {
   addEventListener('resize',queueChapters);
   animateScroll.addEventListener('change',queueChapters);
 }
-
-let leaving = false;
-document.addEventListener('click', event => {
-  const link = event.target.closest?.('a[href]');
-  if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.hasAttribute('download') || (link.target && link.target !== '_self') || reduced.matches) return;
-  const destination = new URL(link.href);
-  if (destination.origin !== location.origin || destination.pathname === location.pathname) return;
-  event.preventDefault();
-  if (leaving) return;
-  leaving = true;
-  dismissMobileMenu();
-  document.documentElement.classList.add('departing');
-  const go = () => {
-    if (!leaving) return;
-    leaving = false;
-    try {sessionStorage.setItem('palomar-arrival', String(Date.now()));} catch {}
-    location.assign(destination.href);
-  };
-  setTimeout(go,1230);
-});
-function clearCurtain() {
-  leaving = false;
-  document.documentElement.classList.remove('arriving','departing');
-}
-window.addEventListener('pageshow',()=>requestAnimationFrame(()=>requestAnimationFrame(clearCurtain)));

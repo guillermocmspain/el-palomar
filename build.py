@@ -15,15 +15,15 @@ def page(route, title, description, content):
     body_class = 'home' if not route else 'inside'
     css = (ROOT/'style.css').read_text(encoding='utf-8').replace("url('assets/", f"url('{prefix}assets/")
     egg = (ROOT/'assets/coccion.svg').read_text(encoding='utf-8')
+    brand = f'<a class="brand-link" href="{prefix}" aria-label="El Palomar, inicio"><img src="{prefix}assets/el-palomar.svg" width="1272" height="759" alt="El Palomar"></a>'
     menu_egg = egg.replace('egg-', 'menu-egg-')
-    route_egg = egg.replace('egg-', 'route-egg-')
     document = f'''<!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8f5ed">
-<noscript><style>.scroll-scene{{height:auto}}.sticky{{position:relative}}.sticky>.intro,.pause{{display:none}}.home .top{{position:sticky;left:auto;transform:none;visibility:visible}}.scrolled .center{{visibility:visible}}</style></noscript><script>try{{const key="palomar-arrival",stamp=Number(sessionStorage.getItem(key));sessionStorage.removeItem(key);if(Date.now()-stamp<8000&&!matchMedia("(prefers-reduced-motion:reduce)").matches)document.documentElement.classList.add("arriving")}}catch{{}}</script><title>{title} · El Palomar</title><meta name="description" content="{escape(description)}"><link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml"><style>{css}</style><script defer src="{prefix}app.js?v=coccion2d"></script></head>
-<body class="{body_class}"><a class="skip" href="#principal">Saltar al contenido</a><header class="top"><a class="word" href="{prefix}">El Palomar</a><nav aria-label="Principal">{navigation}</nav></header>
+<noscript><style>.scroll-scene{{height:auto}}.sticky{{position:relative}}.sticky>.intro,.pause{{display:none}}.home .top{{position:sticky;left:auto;transform:none;visibility:visible}}.scrolled .center{{visibility:visible}}</style></noscript><title>{title} · El Palomar</title><meta name="description" content="{escape(description)}"><link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml"><style>{css}</style><script defer src="{prefix}app.js?v=cabecera"></script></head>
+<body class="{body_class}"><a class="skip" href="#principal">Saltar al contenido</a><header class="top">{brand}<nav aria-label="Principal">{navigation}</nav></header>
 <button class="burger" type="button" popovertarget="mobile-menu" aria-label="Menú principal" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
-<div class="mobile-sheet" id="mobile-menu" popover="auto"><div class="sheet-head"><a class="word" href="{prefix}">El Palomar</a><button type="button" class="sheet-close" autofocus aria-label="Cerrar menú" popovertarget="mobile-menu" popovertargetaction="hide">×</button></div><div class="menu-body"><nav aria-label="Menú móvil">{navigation}</nav><div class="menu-film">{menu_egg}</div></div></div>
-<div class="fry-curtain" aria-hidden="true">{route_egg}</div><main id="principal">{content.replace('@/',prefix)}</main>
+<div class="mobile-sheet" id="mobile-menu" popover="auto"><div class="sheet-head">{brand}<button type="button" class="sheet-close" autofocus aria-label="Cerrar menú" popovertarget="mobile-menu" popovertargetaction="hide">×</button></div><div class="menu-body"><nav aria-label="Menú móvil">{navigation}</nav><div class="menu-film">{menu_egg}</div></div></div>
+<main id="principal">{content.replace('@/',prefix)}</main>
 <footer><div><a class="word" href="{prefix}">El Palomar</a><p>Huevos camperos de Martín Miguel, Segovia.</p></div><nav aria-label="Pie de página">{navigation}</nav></footer></body></html>'''
     folder = ROOT / route
     folder.mkdir(parents=True, exist_ok=True)
@@ -74,7 +74,6 @@ intro='''<section class="intro" id="proyecto"><p class="kicker">El proyecto</p><
 hero='''<div class="scroll-scene"><section class="sticky"><div class="landscape"><picture><source media="(max-aspect-ratio: 3/4)" srcset="@/assets/campo-vertical.avif"><img fetchpriority="high" width="880" height="495" src="@/assets/campo.avif" alt=""></picture><div class="shade"></div></div>
 <div class="bird-stage"><img class="pair" width="720" height="716" srcset="@/assets/pareja-compacta.avif 440w, @/assets/pareja.avif 720w" sizes="(max-width: 600px) 88vw, 53vh" src="@/assets/pareja.avif" data-motion="@/assets/pareja-viva.webp" alt="Dos gallinas camperas de El Palomar">INTRO</div>
 <div class="hero-copy"><p class="place">Martín Miguel <span> / </span> Segovia</p><h1>Huevos <em>camperos.</em></h1></div>
-<nav class="center" aria-label="Portada"><a href="@/productos/">Productos</a><a class="brand" href="@/" aria-label="El Palomar, inicio"><img src="@/assets/marca.webp" width="326" height="65" alt="El Palomar"></a><a href="@/historia/">Historia</a></nav>
 <button class="pause" type="button" aria-label="Pausar movimiento">Ⅱ</button><a class="down" href="#presentacion" aria-label="Descubrir el proyecto">↓</a></section><span id="presentacion"></span></div>'''
 page('', 'Huevos camperos de Martín Miguel', 'Descubre El Palomar, su historia y su catálogo de huevos camperos en cuatro calibres.', hero.replace('INTRO',intro)+product_walkthrough('h2')+story_section())
 page('productos','Productos','Catálogo de huevos camperos S, M, L y XL con pesos y formatos de envasado.',product_walkthrough('h1')+formats)
