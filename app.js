@@ -26,32 +26,61 @@ if (scene) {
   addEventListener('pageshow',schedule);
   paint();
 }
-const eggs=document.querySelectorAll('[data-turn]');
-const animation=new IntersectionObserver(entries=>{
-  for(const {target,isIntersecting} of entries) {
-    target.dataset.still ||= target.getAttribute('src');
-    target.src=isIntersecting && !reduced.matches && !navigator.connection?.saveData ? target.dataset.turn : target.dataset.still;
-    if(isIntersecting && !reduced.matches && target.closest('.shelf') && !target.dataset.entered){
-      target.animate([{transform:'translateY(-45%)',opacity:0},{transform:'translateY(0)',opacity:1}],{duration:650,easing:'ease-out'});
-      target.dataset.entered='true';
-    }
-  }
-},{threshold:.12});
-eggs.forEach(img=>animation.observe(img));
 
-for (const image of document.querySelectorAll('[data-motion]')) {
-  const still = image.getAttribute('src');
-  const button = image.closest('.sticky, .portrait').querySelector('.pause, .motion-control');
-  let stopped = reduced.matches || Boolean(navigator.connection?.saveData);
+function animateAsset(image) {
+  const parent = image.parentElement;
+  const source = image.dataset.motion || image.dataset.turn;
+  const button = image.dataset.motion && image.closest('.sticky, .portrait').querySelector('.pause, .motion-control');
+  const video = document.createElement('video');
+  video.className = 'asset-motion';
+  video.muted = true;
+  video.playsInline = true;
+  video.loop = true;
+  video.preload = 'none';
+  video.setAttribute('aria-hidden','true');
+  parent.append(video);
   let visible = false;
-  function update() {
-    const source = visible && !document.hidden && !stopped ? image.dataset.motion : still;
-    if (image.getAttribute('src') !== source) image.src = source;
-    button.textContent = stopped ? '▶' : 'Ⅱ';
-    button.setAttribute('aria-label', stopped ? 'Reproducir movimiento' : 'Pausar movimiento');
+  let paused = reduced.matches || Boolean(navigator.connection?.saveData);
+  let ready = false;
+  function align() {
+    video.style.left = image.offsetLeft+'px';
+    video.style.top = image.offsetTop+'px';
+    video.style.width = image.offsetWidth+'px';
+    video.style.height = image.offsetHeight+'px';
   }
-  button.addEventListener('click', () => { stopped = !stopped; update(); });
-  reduced.addEventListener('change', () => { stopped = reduced.matches; update(); });
-  document.addEventListener('visibilitychange', update);
-  new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; update(); }).observe(image);
+  function showPoster() {
+    video.classList.remove('is-playing');
+    image.style.opacity = '';
+  }
+  function refresh() {
+    if (button) {
+      button.textContent = paused ? '▶' : 'Ⅱ';
+      button.setAttribute('aria-label',paused?'Reproducir movimiento':'Pausar movimiento');
+    }
+    if (!visible || paused || document.hidden || !ready) {
+      video.pause(); showPoster(); return;
+    }
+    if (!video.src) video.src = source.replace(/\.webp$/,'.webm');
+    video.play().catch(showPoster);
+  }
+  video.addEventListener('playing',()=>{
+    align(); video.classList.add('is-playing'); image.style.opacity='0';
+  });
+  video.addEventListener('error',showPoster);
+  button && button.addEventListener('click',()=>{ paused=!paused;refresh(); });
+  new ResizeObserver(align).observe(parent);
+  new ResizeObserver(align).observe(image);
+  new IntersectionObserver(([entry])=>{
+    visible=entry.isIntersecting;
+    if(visible && !reduced.matches && parent.classList.contains('shelf') && !parent.dataset.entered){
+      parent.animate([{transform:'translateY(-22%)'},{transform:'translateY(0)'}],{duration:650,easing:'ease-out'});
+      parent.dataset.entered='true';
+    }
+    refresh();
+  },{threshold:.08}).observe(image);
+  reduced.addEventListener('change',()=>{paused=reduced.matches;refresh();});
+  document.addEventListener('visibilitychange',refresh);
+  const start=()=>{ready=true;refresh();};
+  if(document.readyState==='complete')start();else window.addEventListener('load',start,{once:true});
 }
+document.querySelectorAll('[data-turn], [data-motion]').forEach(animateAsset);
