@@ -20,7 +20,7 @@ def page(route, title, description, content):
 <noscript><style>.scroll-scene{{height:auto}}.sticky{{position:relative}}.sticky>.intro,.pause{{display:none}}.home .top{{position:sticky;left:auto;transform:none;visibility:visible}}.scrolled .center{{visibility:visible}}</style></noscript><script>try{{const key="palomar-arrival",stamp=Number(sessionStorage.getItem(key));sessionStorage.removeItem(key);if(Date.now()-stamp<8000&&!matchMedia("(prefers-reduced-motion:reduce)").matches)document.documentElement.classList.add("arriving")}}catch{{}}</script><title>{title} · El Palomar</title><meta name="description" content="{escape(description)}"><link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml"><style>{css}</style><script defer src="{prefix}app.js?v=sarten1"></script></head>
 <body class="{body_class}"><a class="skip" href="#principal">Saltar al contenido</a><header class="top"><a class="word" href="{prefix}">El Palomar</a><nav aria-label="Principal">{navigation}</nav></header>
 <button class="burger" type="button" popovertarget="mobile-menu" aria-label="Menú principal" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
-<div class="mobile-sheet" id="mobile-menu" popover="auto"><div class="sheet-head"><a class="word" href="{prefix}">El Palomar</a><button type="button" class="sheet-close" aria-label="Cerrar menú" popovertarget="mobile-menu" popovertargetaction="hide">×</button></div><div class="menu-film">{film}</div><nav aria-label="Menú móvil">{navigation}</nav></div>
+<div class="mobile-sheet" id="mobile-menu" popover="auto"><div class="sheet-head"><a class="word" href="{prefix}">El Palomar</a><button type="button" class="sheet-close" autofocus aria-label="Cerrar menú" popovertarget="mobile-menu" popovertargetaction="hide">×</button></div><div class="menu-film">{film}</div><nav aria-label="Menú móvil">{navigation}</nav></div>
 <div class="fry-curtain" aria-hidden="true">{film}</div><main id="principal">{content.replace('@/',prefix)}</main>
 <footer><div><a class="word" href="{prefix}">El Palomar</a><p>Huevos camperos de Martín Miguel, Segovia.</p></div><nav aria-label="Pie de página">{navigation}</nav></footer></body></html>'''
     folder = ROOT / route
@@ -49,7 +49,7 @@ def product_walkthrough(heading):
             <div class="shell-space"><div class="shell-model"><img loading="lazy" src="@/assets/cascaron-{slug}.avif" data-turn="@/assets/cascaron-{slug}-giro.webp" width="{dimensions[slug][0]}" height="{dimensions[slug][1]}" alt="Huevo campero de calibre {size}"></div></div>
             <div class="calibre-copy"><p class="kicker">Huevo campero · {kind}</p><{subheading} class="calibre-title">Calibre <em>{size}.</em></{subheading}>
             <p class="calibre-weight">{weight.capitalize()} por huevo</p><p>En caja de docena o en estuche de 6 + 6.</p>
-            <a class="button" href="@/productos/{slug}/">Ver producto {size} <span aria-hidden="true">↗</span></a></div>
+            <a class="button" href="@/productos/{slug}/">+ información talla {size} <span aria-hidden="true">↗</span></a></div>
           </div></div></article>''')
     return f'''<section class="walkthrough"><div class="walk-heading"><{heading}>Cuatro <em>calibres.</em></{heading}>
       <nav aria-label="Elegir calibre">{''.join(links)}</nav></div><div class="calibre-run"><div class="pasture" aria-hidden="true"><div class="pasture-next"></div></div>{''.join(chapters)}</div></section>'''

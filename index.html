@@ -39,17 +39,18 @@
     body:has(.mobile-sheet:popover-open) .burger span:first-child{transform:translateY(6px) rotate(45deg)}
     body:has(.mobile-sheet:popover-open) .burger span:nth-child(2){opacity:0}
     body:has(.mobile-sheet:popover-open) .burger span:last-child{transform:translateY(-6px) rotate(-45deg)}
-    .mobile-sheet{position:fixed;inset:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) auto auto;margin:0;width:min(350px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;border:1px solid #d7d7ca;border-radius:26px;background:#faf9f2;color:var(--ink);padding:8px 22px 18px;box-shadow:0 18px 65px #1723132b;transform-origin:95% 0;opacity:0;transform:translateY(-5px) scale(.96);transition:opacity .2s,transform .26s cubic-bezier(.2,.8,.2,1),display .26s allow-discrete,overlay .26s allow-discrete}
-    .mobile-sheet:popover-open{display:block;opacity:1;transform:none}
-    @starting-style{.mobile-sheet:popover-open{opacity:0;transform:translateY(-5px) scale(.96)}}
-    .mobile-sheet::backdrop{background:#20271d38}
+    .mobile-sheet{position:fixed;inset:0;margin:0;width:100%;max-width:none;height:100dvh;max-height:none;overflow:auto;overscroll-behavior:contain;border:0;border-radius:0;color:var(--ink);padding:max(16px,env(safe-area-inset-top)) max(24px,env(safe-area-inset-right)) max(28px,env(safe-area-inset-bottom)) max(24px,env(safe-area-inset-left));grid-template-rows:auto minmax(96px,1fr) auto;transform:translateY(100%);transition:transform .46s cubic-bezier(.22,.8,.2,1),display .46s allow-discrete,overlay .46s allow-discrete}
+    .mobile-sheet:popover-open{display:grid;transform:translateY(0)}
+    @starting-style{.mobile-sheet:popover-open{transform:translateY(100%)}}
+    .mobile-sheet::backdrop{background:#20271d26}
+    html:has(.mobile-sheet:popover-open){overflow:hidden}
     .sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
     .sheet-head .word{font-size:1.45rem}
     .sheet-close{width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--ink);font:300 2rem/1 Arial,sans-serif;cursor:pointer}
-    .mobile-sheet nav a{display:flex;align-items:center;justify-content:space-between;min-height:54px;border-top:1px solid var(--line);font:normal 1.8rem/1.2 Georgia,serif;letter-spacing:-.04em;text-decoration:none}
+    .mobile-sheet nav a{display:flex;align-items:center;justify-content:space-between;min-height:clamp(52px,8dvh,78px);border-top:1px solid var(--line);font:normal clamp(1.8rem,6.8vw,3rem)/1.2 Georgia,serif;letter-spacing:-.04em;text-decoration:none}
     .mobile-sheet nav a[aria-current=page]::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--olive)}
     .mobile-sheet :focus-visible,.burger:focus-visible{outline:3px solid #993914;outline-offset:2px}
-    .home .pause{left:16px;right:auto;top:18px}
+    .home .pause{left:auto;right:var(--gutter);top:auto;bottom:calc(8% + 60px);width:50px;height:50px}
   }
 }
 @media(prefers-reduced-motion:reduce){.mobile-sheet,.burger span{transition:none}}
@@ -98,10 +99,13 @@
 .departing .frying-egg{animation:fry-reveal .32s ease both}
 @media(max-height:450px){.menu-film video{width:min(130px,26svh)}}
 @media(max-height:479px) and (min-aspect-ratio:1/1){.calibre-layout{grid-template-columns:1fr 1fr;gap:4%;padding:42px 0 18px;text-align:left}.shell-model{height:calc(54svh * var(--proportion))}.calibre-copy .calibre-title{font-size:2.3rem;margin-bottom:5px}.calibre-copy .kicker{margin:0}.calibre-copy .calibre-weight{margin-bottom:3px}.calibre-copy .button{margin-top:8px}.calibre-chapter:nth-of-type(even) .shell-space{order:2}}
+
+@media(max-width:700px){.menu-film video{width:min(74vw,310px,46dvh)}}
+@media(max-width:700px) and (max-height:480px) and (orientation:landscape){.mobile-sheet{grid-template: auto 1fr / 1fr 1fr;column-gap:24px}.sheet-head{grid-column:1/-1}.menu-film video{width:min(100%,220px)}.mobile-sheet nav{align-self:center}}
 </style><script defer src="./app.js?v=sarten1"></script></head>
 <body class="home"><a class="skip" href="#principal">Saltar al contenido</a><header class="top"><a class="word" href="./">El Palomar</a><nav aria-label="Principal"><a href="./" aria-current="page">Inicio</a><a href="./productos/">Productos</a><a href="./historia/">Historia</a><a href="./contacto/">Contacto</a></nav></header>
 <button class="burger" type="button" popovertarget="mobile-menu" aria-label="Menú principal" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
-<div class="mobile-sheet" id="mobile-menu" popover="auto"><div class="sheet-head"><a class="word" href="./">El Palomar</a><button type="button" class="sheet-close" aria-label="Cerrar menú" popovertarget="mobile-menu" popovertargetaction="hide">×</button></div><div class="menu-film"><video class="frying-egg" muted playsinline preload="none" aria-hidden="true" data-src="./assets/huevo-sarten.mp4"></video></div><nav aria-label="Menú móvil"><a href="./" aria-current="page">Inicio</a><a href="./productos/">Productos</a><a href="./historia/">Historia</a><a href="./contacto/">Contacto</a></nav></div>
+<div class="mobile-sheet" id="mobile-menu" popover="auto"><div class="sheet-head"><a class="word" href="./">El Palomar</a><button type="button" class="sheet-close" autofocus aria-label="Cerrar menú" popovertarget="mobile-menu" popovertargetaction="hide">×</button></div><div class="menu-film"><video class="frying-egg" muted playsinline preload="none" aria-hidden="true" data-src="./assets/huevo-sarten.mp4"></video></div><nav aria-label="Menú móvil"><a href="./" aria-current="page">Inicio</a><a href="./productos/">Productos</a><a href="./historia/">Historia</a><a href="./contacto/">Contacto</a></nav></div>
 <div class="fry-curtain" aria-hidden="true"><video class="frying-egg" muted playsinline preload="none" aria-hidden="true" data-src="./assets/huevo-sarten.mp4"></video></div><main id="principal"><div class="scroll-scene"><section class="sticky"><div class="landscape"><picture><source media="(max-aspect-ratio: 3/4)" srcset="./assets/campo-vertical.avif"><img fetchpriority="high" width="880" height="495" src="./assets/campo.avif" alt=""></picture><div class="shade"></div></div>
 <div class="bird-stage"><img class="pair" width="720" height="716" srcset="./assets/pareja-compacta.avif 440w, ./assets/pareja.avif 720w" sizes="(max-width: 600px) 88vw, 53vh" src="./assets/pareja.avif" data-motion="./assets/pareja-viva.webp" alt="Dos gallinas camperas de El Palomar"><section class="intro" id="proyecto"><p class="kicker">El proyecto</p><h2>Del campo <em>a la mesa.</em></h2><p>En El Palomar criamos gallinas camperas en Martín Miguel, Segovia. Cuidamos su alimentación y su entorno a lo largo de todo el ciclo de cría.</p></section></div>
 <div class="hero-copy"><p class="place">Martín Miguel <span> / </span> Segovia</p><h1>Huevos <em>camperos.</em></h1></div>
@@ -112,24 +116,24 @@
             <div class="shell-space"><div class="shell-model"><img loading="lazy" src="./assets/cascaron-s.avif" data-turn="./assets/cascaron-s-giro.webp" width="447" height="610" alt="Huevo campero de calibre S"></div></div>
             <div class="calibre-copy"><p class="kicker">Huevo campero · Pequeño</p><h3 class="calibre-title">Calibre <em>S.</em></h3>
             <p class="calibre-weight">Menos de 53 g por huevo</p><p>En caja de docena o en estuche de 6 + 6.</p>
-            <a class="button" href="./productos/s/">Ver producto S <span aria-hidden="true">↗</span></a></div>
+            <a class="button" href="./productos/s/">+ información talla S <span aria-hidden="true">↗</span></a></div>
           </div></div></article><article class="calibre-chapter" id="calibre-m" style="--proportion:0.84">
           <div class="calibre-frame"><div class="calibre-layout">
             <div class="shell-space"><div class="shell-model"><img loading="lazy" src="./assets/cascaron-m.avif" data-turn="./assets/cascaron-m-giro.webp" width="445" height="610" alt="Huevo campero de calibre M"></div></div>
             <div class="calibre-copy"><p class="kicker">Huevo campero · Mediano</p><h3 class="calibre-title">Calibre <em>M.</em></h3>
             <p class="calibre-weight">53 a menos de 63 g por huevo</p><p>En caja de docena o en estuche de 6 + 6.</p>
-            <a class="button" href="./productos/m/">Ver producto M <span aria-hidden="true">↗</span></a></div>
+            <a class="button" href="./productos/m/">+ información talla M <span aria-hidden="true">↗</span></a></div>
           </div></div></article><article class="calibre-chapter" id="calibre-l" style="--proportion:0.92">
           <div class="calibre-frame"><div class="calibre-layout">
             <div class="shell-space"><div class="shell-model"><img loading="lazy" src="./assets/cascaron-l.avif" data-turn="./assets/cascaron-l-giro.webp" width="446" height="610" alt="Huevo campero de calibre L"></div></div>
             <div class="calibre-copy"><p class="kicker">Huevo campero · Grande</p><h3 class="calibre-title">Calibre <em>L.</em></h3>
             <p class="calibre-weight">63 a menos de 73 g por huevo</p><p>En caja de docena o en estuche de 6 + 6.</p>
-            <a class="button" href="./productos/l/">Ver producto L <span aria-hidden="true">↗</span></a></div>
+            <a class="button" href="./productos/l/">+ información talla L <span aria-hidden="true">↗</span></a></div>
           </div></div></article><article class="calibre-chapter" id="calibre-xl" style="--proportion:1.00">
           <div class="calibre-frame"><div class="calibre-layout">
             <div class="shell-space"><div class="shell-model"><img loading="lazy" src="./assets/cascaron-xl.avif" data-turn="./assets/cascaron-xl-giro.webp" width="446" height="610" alt="Huevo campero de calibre XL"></div></div>
             <div class="calibre-copy"><p class="kicker">Huevo campero · Muy grande</p><h3 class="calibre-title">Calibre <em>XL.</em></h3>
             <p class="calibre-weight">73 g o más por huevo</p><p>En caja de docena o en estuche de 6 + 6.</p>
-            <a class="button" href="./productos/xl/">Ver producto XL <span aria-hidden="true">↗</span></a></div>
+            <a class="button" href="./productos/xl/">+ información talla XL <span aria-hidden="true">↗</span></a></div>
           </div></div></article></div></section><section class="story"><div class="portrait"><img width="375" height="750" loading="lazy" src="./assets/cobriza.avif" data-motion="./assets/cobriza-viva.webp" alt="Gallina de plumaje cobrizo de El Palomar"><button type="button" class="motion-control" aria-label="Pausar la gallina">Ⅱ</button></div><div><p class="kicker">Nuestra historia</p><h2>Todo empieza en <em>Martín Miguel.</em></h2><p>En este pueblo de Segovia nace El Palomar. El proyecto recupera una forma cercana de producir huevos, con el cuidado diario de las gallinas en el centro.</p><a class="button" href="./historia/">Conocer la historia <span>↗</span></a></div></section></main>
 <footer><div><a class="word" href="./">El Palomar</a><p>Huevos camperos de Martín Miguel, Segovia.</p></div><nav aria-label="Pie de página"><a href="./" aria-current="page">Inicio</a><a href="./productos/">Productos</a><a href="./historia/">Historia</a><a href="./contacto/">Contacto</a></nav></footer></body></html>
