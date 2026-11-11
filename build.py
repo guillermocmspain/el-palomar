@@ -36,6 +36,8 @@ def catalog(exclude=None):
     return '<div class="eggs">'+''.join(cards)+'</div>'
 
 def product_walkthrough(heading):
+    subheading = "h2" if heading == "h1" else "h3"
+    dimensions = {'s': (447, 610), 'm': (445, 610), 'l': (446, 610), 'xl': (446, 610)}
     chapters = []
     links = []
     for index, (size, weight, kind) in enumerate(SIZES):
@@ -43,8 +45,8 @@ def product_walkthrough(heading):
         links.append(f'<a href="#calibre-{slug}" aria-label="Ir al calibre {size}">{size}</a>')
         chapters.append(f'''<article class="calibre-chapter" id="calibre-{slug}" style="--proportion:{.76 + .08 * index:.2f}">
           <div class="calibre-frame"><div class="calibre-layout">
-            <div class="shell-space"><div class="shell-model"><img loading="lazy" src="@/assets/cascaron-{slug}.avif" data-turn="@/assets/cascaron-{slug}-giro.webp" width="224" height="280" alt="Huevo campero de calibre {size}"></div></div>
-            <div class="calibre-copy"><p class="kicker">Huevo campero · {kind}</p><h3>Calibre <em>{size}.</em></h3>
+            <div class="shell-space"><div class="shell-model"><img loading="lazy" src="@/assets/cascaron-{slug}.avif" data-turn="@/assets/cascaron-{slug}-giro.webp" width="{dimensions[slug][0]}" height="{dimensions[slug][1]}" alt="Huevo campero de calibre {size}"></div></div>
+            <div class="calibre-copy"><p class="kicker">Huevo campero · {kind}</p><{subheading} class="calibre-title">Calibre <em>{size}.</em></{subheading}>
             <p class="calibre-weight">{weight.capitalize()} por huevo</p><p>En caja de docena o en estuche de 6 + 6.</p>
             <a class="button" href="@/productos/{slug}/">Ver producto {size} <span aria-hidden="true">↗</span></a></div>
           </div></div></article>''')
