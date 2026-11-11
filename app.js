@@ -30,7 +30,8 @@ if (scene) {
 function animateAsset(image) {
   const parent = image.parentElement;
   const source = image.dataset.motion || image.dataset.turn;
-  const button = image.dataset.motion && image.closest('.sticky, .portrait').querySelector('.pause, .motion-control');
+  const detail = parent.classList.contains('sample');
+  const button = detail ? parent.querySelector('.turn-control') : image.dataset.motion && image.closest('.sticky, .portrait').querySelector('.pause, .motion-control');
   const video = document.createElement('video');
   video.className = 'asset-motion';
   video.muted = true;
@@ -40,7 +41,7 @@ function animateAsset(image) {
   video.setAttribute('aria-hidden','true');
   parent.append(video);
   let visible = false;
-  let paused = reduced.matches || Boolean(navigator.connection?.saveData);
+  let paused = detail || reduced.matches || Boolean(navigator.connection?.saveData);
   let ready = false;
   function align() {
     video.style.left = image.offsetLeft+'px';
@@ -55,7 +56,7 @@ function animateAsset(image) {
   function refresh() {
     if (button) {
       button.textContent = paused ? '▶' : 'Ⅱ';
-      button.setAttribute('aria-label',paused?'Reproducir movimiento':'Pausar movimiento');
+      button.setAttribute('aria-label',detail ? button.textContent : (paused?'Reproducir movimiento':'Pausar movimiento'));
     }
     if (!visible || paused || document.hidden || !ready) {
       video.pause(); showPoster(); return;
