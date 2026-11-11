@@ -29,8 +29,34 @@
 
 @media(max-width:700px){.collection{background-image:linear-gradient(180deg,#f8f5edf5 0%,#f8f5eddd 25%,#f8f5ed30 47%,#f8f5ed66 64%,#f2f1e8f5 84%),url('./assets/pradera-vertical.avif')}}
 .turn-control{position:absolute;bottom:12px;right:12px;z-index:1;background:#293424;color:white;font:600 .84rem Arial,sans-serif;border:0;border-radius:40px;padding:13px 17px;cursor:pointer}
-</style><script defer src="./app.js?v=pradera5"></script></head>
+
+.burger,.mobile-sheet{display:none}
+@media(max-width:700px){
+  @supports selector(:popover-open){
+    .home .center,.home .top,.inside .top{display:none}
+    .burger{position:fixed;right:max(16px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));z-index:9;display:grid;align-content:center;justify-items:center;gap:4px;width:50px;height:50px;padding:0;border:1px solid #d7d7ca;border-radius:50%;background:#faf9f2;color:var(--ink);box-shadow:0 4px 18px #222a1b17;cursor:pointer}
+    .burger span{height:2px;width:21px;background:currentColor;border-radius:2px;transition:transform .24s,opacity .18s}
+    body:has(.mobile-sheet:popover-open) .burger span:first-child{transform:translateY(6px) rotate(45deg)}
+    body:has(.mobile-sheet:popover-open) .burger span:nth-child(2){opacity:0}
+    body:has(.mobile-sheet:popover-open) .burger span:last-child{transform:translateY(-6px) rotate(-45deg)}
+    .mobile-sheet{position:fixed;inset:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) auto auto;margin:0;width:min(350px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow:auto;border:1px solid #d7d7ca;border-radius:26px;background:#faf9f2;color:var(--ink);padding:8px 22px 18px;box-shadow:0 18px 65px #1723132b;transform-origin:95% 0;opacity:0;transform:translateY(-5px) scale(.96);transition:opacity .2s,transform .26s cubic-bezier(.2,.8,.2,1),display .26s allow-discrete,overlay .26s allow-discrete}
+    .mobile-sheet:popover-open{display:block;opacity:1;transform:none}
+    @starting-style{.mobile-sheet:popover-open{opacity:0;transform:translateY(-5px) scale(.96)}}
+    .mobile-sheet::backdrop{background:#20271d38}
+    .sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .sheet-head .word{font-size:1.45rem}
+    .sheet-close{width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:var(--ink);font:300 2rem/1 Arial,sans-serif;cursor:pointer}
+    .mobile-sheet nav a{display:flex;align-items:center;justify-content:space-between;min-height:54px;border-top:1px solid var(--line);font:normal 1.8rem/1.2 Georgia,serif;letter-spacing:-.04em;text-decoration:none}
+    .mobile-sheet nav a[aria-current=page]::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--olive)}
+    .mobile-sheet :focus-visible,.burger:focus-visible{outline:3px solid #993914;outline-offset:2px}
+    .home .pause{left:16px;right:auto;top:18px}
+  }
+}
+@media(prefers-reduced-motion:reduce){.mobile-sheet,.burger span{transition:none}}
+</style><script defer src="./app.js?v=menu1"></script></head>
 <body class="home"><a class="skip" href="#principal">Saltar al contenido</a><header class="top"><a class="word" href="./">El Palomar</a><nav aria-label="Principal"><a href="./" aria-current="page">Inicio</a><a href="./productos/">Productos</a><a href="./historia/">Historia</a><a href="./contacto/">Contacto</a></nav></header>
+<button class="burger" type="button" popovertarget="mobile-menu" aria-label="Menú principal" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
+<div class="mobile-sheet" id="mobile-menu" popover="auto"><div class="sheet-head"><a class="word" href="./">El Palomar</a><button type="button" class="sheet-close" aria-label="Cerrar menú" popovertarget="mobile-menu" popovertargetaction="hide">×</button></div><nav aria-label="Menú móvil"><a href="./" aria-current="page">Inicio</a><a href="./productos/">Productos</a><a href="./historia/">Historia</a><a href="./contacto/">Contacto</a></nav></div>
 <main id="principal"><div class="scroll-scene"><section class="sticky"><div class="landscape"><picture><source media="(max-aspect-ratio: 3/4)" srcset="./assets/campo-vertical.avif"><img fetchpriority="high" width="880" height="495" src="./assets/campo.avif" alt=""></picture><div class="shade"></div></div>
 <div class="bird-stage"><img class="pair" width="720" height="716" srcset="./assets/pareja-compacta.avif 440w, ./assets/pareja.avif 720w" sizes="(max-width: 600px) 88vw, 53vh" src="./assets/pareja.avif" data-motion="./assets/pareja-viva.webp" alt="Dos gallinas camperas de El Palomar"><section class="intro" id="proyecto"><p class="kicker">El proyecto</p><h2>Del campo <em>a la mesa.</em></h2><p>En El Palomar criamos gallinas camperas en Martín Miguel, Segovia. Cuidamos su alimentación y su entorno a lo largo de todo el ciclo de cría.</p></section></div>
 <div class="hero-copy"><p class="place">Martín Miguel <span> / </span> Segovia</p><h1>Huevos <em>camperos.</em></h1></div>

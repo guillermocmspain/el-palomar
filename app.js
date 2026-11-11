@@ -85,3 +85,10 @@ function animateAsset(image) {
   if(document.readyState==='complete')start();else window.addEventListener('load',start,{once:true});
 }
 document.querySelectorAll('[data-turn], [data-motion]').forEach(animateAsset);
+
+const mobileMenu = document.getElementById('mobile-menu');
+function dismissMobileMenu() {
+  if (mobileMenu?.hidePopover && mobileMenu.matches(':popover-open')) mobileMenu.hidePopover();
+}
+matchMedia('(max-width:700px)').addEventListener('change',dismissMobileMenu);
+window.addEventListener('pageshow',dismissMobileMenu);
