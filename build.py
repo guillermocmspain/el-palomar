@@ -14,14 +14,16 @@ def page(route, title, description, content):
     navigation = ''.join(f'<a href="{link(slug)}"'+(' aria-current="page"' if slug==route else '')+f'>{label}</a>' for slug,label in NAV)
     body_class = 'home' if not route else 'inside'
     css = (ROOT/'style.css').read_text(encoding='utf-8').replace("url('assets/", f"url('{prefix}assets/")
-    film = f'<video class="frying-egg" muted playsinline preload="none" aria-hidden="true" data-src="{prefix}assets/huevo-sarten.mp4"></video>'
+    egg = (ROOT/'assets/coccion.svg').read_text(encoding='utf-8')
+    menu_egg = egg.replace('egg-', 'menu-egg-')
+    route_egg = egg.replace('egg-', 'route-egg-')
     document = f'''<!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8f5ed">
-<noscript><style>.scroll-scene{{height:auto}}.sticky{{position:relative}}.sticky>.intro,.pause{{display:none}}.home .top{{position:sticky;left:auto;transform:none;visibility:visible}}.scrolled .center{{visibility:visible}}</style></noscript><script>try{{const key="palomar-arrival",stamp=Number(sessionStorage.getItem(key));sessionStorage.removeItem(key);if(Date.now()-stamp<8000&&!matchMedia("(prefers-reduced-motion:reduce)").matches)document.documentElement.classList.add("arriving")}}catch{{}}</script><title>{title} · El Palomar</title><meta name="description" content="{escape(description)}"><link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml"><style>{css}</style><script defer src="{prefix}app.js?v=sarten1"></script></head>
+<noscript><style>.scroll-scene{{height:auto}}.sticky{{position:relative}}.sticky>.intro,.pause{{display:none}}.home .top{{position:sticky;left:auto;transform:none;visibility:visible}}.scrolled .center{{visibility:visible}}</style></noscript><script>try{{const key="palomar-arrival",stamp=Number(sessionStorage.getItem(key));sessionStorage.removeItem(key);if(Date.now()-stamp<8000&&!matchMedia("(prefers-reduced-motion:reduce)").matches)document.documentElement.classList.add("arriving")}}catch{{}}</script><title>{title} · El Palomar</title><meta name="description" content="{escape(description)}"><link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml"><style>{css}</style><script defer src="{prefix}app.js?v=coccion2d"></script></head>
 <body class="{body_class}"><a class="skip" href="#principal">Saltar al contenido</a><header class="top"><a class="word" href="{prefix}">El Palomar</a><nav aria-label="Principal">{navigation}</nav></header>
 <button class="burger" type="button" popovertarget="mobile-menu" aria-label="Menú principal" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
-<div class="mobile-sheet" id="mobile-menu" popover="auto"><div class="sheet-head"><a class="word" href="{prefix}">El Palomar</a><button type="button" class="sheet-close" autofocus aria-label="Cerrar menú" popovertarget="mobile-menu" popovertargetaction="hide">×</button></div><div class="menu-body"><nav aria-label="Menú móvil">{navigation}</nav><div class="menu-film">{film}</div></div></div>
-<div class="fry-curtain" aria-hidden="true">{film}</div><main id="principal">{content.replace('@/',prefix)}</main>
+<div class="mobile-sheet" id="mobile-menu" popover="auto"><div class="sheet-head"><a class="word" href="{prefix}">El Palomar</a><button type="button" class="sheet-close" autofocus aria-label="Cerrar menú" popovertarget="mobile-menu" popovertargetaction="hide">×</button></div><div class="menu-body"><nav aria-label="Menú móvil">{navigation}</nav><div class="menu-film">{menu_egg}</div></div></div>
+<div class="fry-curtain" aria-hidden="true">{route_egg}</div><main id="principal">{content.replace('@/',prefix)}</main>
 <footer><div><a class="word" href="{prefix}">El Palomar</a><p>Huevos camperos de Martín Miguel, Segovia.</p></div><nav aria-label="Pie de página">{navigation}</nav></footer></body></html>'''
     folder = ROOT / route
     folder.mkdir(parents=True, exist_ok=True)

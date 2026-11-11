@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="frying-egg" viewBox="0 0 400 225" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="egg-white" cx=".42" cy=".36" r=".73">
+      <stop stop-color="#fffbed"/><stop offset=".55" stop-color="#fffef9"/><stop offset=".86" stop-color="#eee9d8"/><stop offset=".96" stop-color="#e2d6b8"/><stop offset="1" stop-color="#d9c79e"/>
+    </radialGradient>
+    <radialGradient id="egg-yolk" cx=".36" cy=".27" r=".8">
+      <stop stop-color="#ffda67"/><stop offset=".34" stop-color="#ffc440"/><stop offset=".72" stop-color="#f9a223"/><stop offset=".95" stop-color="#e48b1c"/><stop offset="1" stop-color="#da8320"/>
+    </radialGradient>
+    <radialGradient id="egg-light"><stop stop-color="#fff4c5" stop-opacity=".85"/><stop offset="1" stop-color="#fff4c5" stop-opacity="0"/></radialGradient>
+    <radialGradient id="egg-shade"><stop stop-color="#916e34" stop-opacity=".25"/><stop offset="1" stop-color="#916e34" stop-opacity="0"/></radialGradient>
+    <path id="egg-edge" d="M38 125C36 112 49 100 64 95C78 90 80 76 98 68C116 60 130 67 148 63C167 59 171 47 194 49C217 50 231 64 252 65C278 66 291 60 312 72C326 80 326 91 342 99C359 108 370 120 365 133C363 149 348 150 336 163C325 177 309 183 288 180C266 176 253 184 231 182C206 181 194 173 173 177C149 182 135 191 111 184C93 179 82 169 66 166C46 161 32 147 38 125Z"/>
+  </defs>
+  <g class="albumen">
+    <use href="#egg-edge" fill="#dfd2b4" transform="translate(0 1.5)"/>
+    <use href="#egg-edge" fill="url(#egg-white)"/>
+    <g class="set-white" fill="#fff" opacity=".56">
+      <path d="M51 125C61 104 83 110 99 89C111 73 131 79 141 79C124 88 115 99 106 113C92 132 64 135 51 125Z"/>
+      <path d="M231 76C256 86 279 70 301 78C319 84 322 98 337 106C311 99 303 108 283 102C263 96 245 97 231 76Z"/>
+    </g>
+  </g>
+  <g class="yolk-dome">
+    <ellipse cx="161" cy="131" rx="66" ry="34" fill="url(#egg-shade)"/>
+    <path d="M105 121C105 99 126 79 153 77C180 74 205 90 210 112C216 134 196 145 170 148C139 152 107 144 105 126Z" fill="url(#egg-yolk)"/>
+    <ellipse cx="139" cy="95" rx="21" ry="8" transform="rotate(-22 139 95)" fill="url(#egg-light)"/>
+  </g>
+</svg>

@@ -71,13 +71,11 @@
 
 @view-transition{navigation:none}
 .fry-curtain{position:fixed;inset:0;z-index:30;display:grid;place-items:center;background:white;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .24s ease,visibility 0s .24s}
-.frying-egg{display:block;aspect-ratio:9/5;object-fit:contain;height:auto;width:min(64vw,36rem,74svh);background:white}
+.frying-egg{display:block;aspect-ratio:9/5;object-fit:contain;height:auto;width:min(64vw,36rem,74svh);background:transparent}
 .departing .fry-curtain,.arriving .fry-curtain{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
-.arriving .fry-curtain video{background:white url('../../assets/huevo-frito.webp') center/contain no-repeat}
-.menu-film{display:grid;place-items:center}.menu-film video{width:min(100%,200px,32svh)}
+.menu-film{display:grid;place-items:center}.menu-film .frying-egg{width:min(100%,200px,32svh)}
 .mobile-sheet{background:white}
 @keyframes fry-reveal{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-@media(prefers-reduced-motion:reduce){.fry-curtain,.menu-film{transition:none;animation:none!important}.menu-film{background:white url('../../assets/huevo-frito.webp') center/contain no-repeat}.menu-film video{visibility:hidden}}
 
 .calibre-run{position:relative;isolation:isolate}
 .pasture{display:none}
@@ -95,20 +93,19 @@
 }
 @media(max-width:700px){.walk-enabled .pasture{background-image:linear-gradient(0deg,#233122f7,#28392388),url('../../assets/pradera-vertical.avif')}.pasture-next{background-image:linear-gradient(0deg,#233122f7,#28392388),url('../../assets/horizonte-movil.avif')}}
 .shell-model.in-flight{opacity:0}
-.departing .frying-egg,.mobile-sheet:popover-open .frying-egg{background:white url('../../assets/huevo-crudo.webp') center/contain no-repeat}
 .departing .frying-egg{animation:fry-reveal .32s ease both}
-@media(max-height:450px){.menu-film video{width:min(130px,26svh)}}
+@media(max-height:450px){.menu-film .frying-egg{width:min(130px,26svh)}}
 @media(max-height:479px) and (min-aspect-ratio:1/1){.calibre-layout{grid-template-columns:1fr 1fr;gap:4%;padding:42px 0 18px;text-align:left}.shell-model{height:calc(54svh * var(--proportion))}.calibre-copy .calibre-title{font-size:2.3rem;margin-bottom:5px}.calibre-copy .kicker{margin:0}.calibre-copy .calibre-weight{margin-bottom:3px}.calibre-copy .button{margin-top:8px}.calibre-chapter:nth-of-type(even) .shell-space{order:2}}
 
 @media(max-width:700px){
   .menu-body{align-self:center;width:min(100%,32rem);margin-inline:auto;display:grid;gap:clamp(12px,3.6dvh,36px)}
   .mobile-sheet nav a{min-height:clamp(52px,8.6dvh,80px);font-size:clamp(2rem,8.2vw,3.6rem)}
-  .menu-film video{width:min(72vw,300px,46dvh)}
+  .menu-film .frying-egg{width:min(72vw,300px,46dvh)}
 }
 @media(max-width:700px) and (max-height:480px) and (orientation:landscape){
   .mobile-sheet{--menu-origin:76% 55%}
   .menu-body{width:100%;grid-template-columns:1fr 1fr;align-items:center;gap:24px}
-  .menu-film video{width:min(100%,220px)}
+  .menu-film .frying-egg{width:min(100%,220px)}
   .mobile-sheet nav a{font-size:1.75rem;min-height:46px}
 }
 
@@ -116,9 +113,70 @@
 .story .portrait{background:transparent;border-radius:0;overflow:visible}
 .story-copy{position:relative}.story-copy .kicker{color:#e6ead8}.story-copy h1,.story-copy h2{font-size:clamp(3rem,5.6vw,6.5rem)}.story-copy .button{background:#f8f5ed;color:#293424}
 @media(max-width:700px){.story{background-image:linear-gradient(0deg,#19281bf0 10%,#203321cc 72%,#24332388),url('../../assets/horizonte-movil.avif');gap:24px}.story .portrait{padding-top:0}.story .portrait img{height:min(32svh,300px);width:auto}.story-copy h1,.story-copy h2{margin-bottom:18px}}
-</style><script defer src="../../app.js?v=sarten1"></script></head>
+@media(prefers-reduced-motion:no-preference){
+  :is(.departing .fry-curtain,.mobile-sheet:popover-open) .albumen{transform-origin:155px 117px;animation:albumen-set 1.12s cubic-bezier(.21,.68,.28,1) both}
+  :is(.departing .fry-curtain,.mobile-sheet:popover-open) .set-white{animation:white-bloom 1.08s ease-out both}
+  :is(.departing .fry-curtain,.mobile-sheet:popover-open) .yolk-dome{transform-origin:158px 137px;animation:yolk-settle .85s ease-out both}
+}
+@keyframes albumen-set{0%{opacity:.18;transform:scale(.67,.73)}45%{opacity:.76;transform:scale(.93,.95)}100%{opacity:1;transform:scale(1)}}
+@keyframes white-bloom{from{opacity:0}to{opacity:.56}}
+@keyframes yolk-settle{0%{transform:scale(.94,1.07)}65%{transform:scale(1.015,.985)}100%{transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.departing .frying-egg{animation:none}}
+</style><script defer src="../../app.js?v=coccion2d"></script></head>
 <body class="inside"><a class="skip" href="#principal">Saltar al contenido</a><header class="top"><a class="word" href="../../">El Palomar</a><nav aria-label="Principal"><a href="../../">Inicio</a><a href="../../productos/">Productos</a><a href="../../historia/">Historia</a><a href="../../contacto/">Contacto</a></nav></header>
 <button class="burger" type="button" popovertarget="mobile-menu" aria-label="Menú principal" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
-<div class="mobile-sheet" id="mobile-menu" popover="auto"><div class="sheet-head"><a class="word" href="../../">El Palomar</a><button type="button" class="sheet-close" autofocus aria-label="Cerrar menú" popovertarget="mobile-menu" popovertargetaction="hide">×</button></div><div class="menu-body"><nav aria-label="Menú móvil"><a href="../../">Inicio</a><a href="../../productos/">Productos</a><a href="../../historia/">Historia</a><a href="../../contacto/">Contacto</a></nav><div class="menu-film"><video class="frying-egg" muted playsinline preload="none" aria-hidden="true" data-src="../../assets/huevo-sarten.mp4"></video></div></div></div>
-<div class="fry-curtain" aria-hidden="true"><video class="frying-egg" muted playsinline preload="none" aria-hidden="true" data-src="../../assets/huevo-sarten.mp4"></video></div><main id="principal"><article class="detail"><div class="sample"><img width="224" height="280" src="../../assets/cascaron-xl.avif" data-turn="../../assets/cascaron-xl-giro.webp" alt="Huevo campero calibre XL"><button type="button" class="turn-control">Girar el huevo</button></div><div><a href="../../productos/">← Todos los productos</a><p class="kicker">Huevo campero · Muy grande</p><h1>Calibre <em>XL.</em></h1><p class="weight">73 g o más por huevo</p><p>Disponible en caja de docena y en formato de 6 + 6. Consulta la disponibilidad directamente con la granja.</p><a class="button" href="../../contacto/">Consultar a la granja ↗</a></div></article><section class="formats"><h2>Dos formas de llevarlos.</h2><div><h3>Caja de docena</h3><p>Doce huevos en una huevera.</p></div><div><h3>Formato 6 + 6</h3><p>Dos medias docenas en un estuche dividido.</p></div><p class="note">Trabajamos con todos los calibres. El envasado se ajusta al peso mínimo indicado en el estuche para la docena o la media docena.</p></section><section class="related"><h2>Otros <em>calibres.</em></h2><div class="eggs"><a class="egg" href="../../productos/s/"><span class="shelf"><img width="224" height="280" style="--size:62%" loading="lazy" src="../../assets/cascaron-s.avif" data-turn="../../assets/cascaron-s-giro.webp" alt=""></span><span class="eggname">Calibre S<span aria-hidden="true">↗</span></span><span>Pequeño · menos de 53 g</span></a><a class="egg" href="../../productos/m/"><span class="shelf"><img width="224" height="280" style="--size:74%" loading="lazy" src="../../assets/cascaron-m.avif" data-turn="../../assets/cascaron-m-giro.webp" alt=""></span><span class="eggname">Calibre M<span aria-hidden="true">↗</span></span><span>Mediano · 53 a menos de 63 g</span></a><a class="egg" href="../../productos/l/"><span class="shelf"><img width="224" height="280" style="--size:86%" loading="lazy" src="../../assets/cascaron-l.avif" data-turn="../../assets/cascaron-l-giro.webp" alt=""></span><span class="eggname">Calibre L<span aria-hidden="true">↗</span></span><span>Grande · 63 a menos de 73 g</span></a></div></section></main>
+<div class="mobile-sheet" id="mobile-menu" popover="auto"><div class="sheet-head"><a class="word" href="../../">El Palomar</a><button type="button" class="sheet-close" autofocus aria-label="Cerrar menú" popovertarget="mobile-menu" popovertargetaction="hide">×</button></div><div class="menu-body"><nav aria-label="Menú móvil"><a href="../../">Inicio</a><a href="../../productos/">Productos</a><a href="../../historia/">Historia</a><a href="../../contacto/">Contacto</a></nav><div class="menu-film"><svg xmlns="http://www.w3.org/2000/svg" class="frying-egg" viewBox="0 0 400 225" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="menu-egg-white" cx=".42" cy=".36" r=".73">
+      <stop stop-color="#fffbed"/><stop offset=".55" stop-color="#fffef9"/><stop offset=".86" stop-color="#eee9d8"/><stop offset=".96" stop-color="#e2d6b8"/><stop offset="1" stop-color="#d9c79e"/>
+    </radialGradient>
+    <radialGradient id="menu-egg-yolk" cx=".36" cy=".27" r=".8">
+      <stop stop-color="#ffda67"/><stop offset=".34" stop-color="#ffc440"/><stop offset=".72" stop-color="#f9a223"/><stop offset=".95" stop-color="#e48b1c"/><stop offset="1" stop-color="#da8320"/>
+    </radialGradient>
+    <radialGradient id="menu-egg-light"><stop stop-color="#fff4c5" stop-opacity=".85"/><stop offset="1" stop-color="#fff4c5" stop-opacity="0"/></radialGradient>
+    <radialGradient id="menu-egg-shade"><stop stop-color="#916e34" stop-opacity=".25"/><stop offset="1" stop-color="#916e34" stop-opacity="0"/></radialGradient>
+    <path id="menu-egg-edge" d="M38 125C36 112 49 100 64 95C78 90 80 76 98 68C116 60 130 67 148 63C167 59 171 47 194 49C217 50 231 64 252 65C278 66 291 60 312 72C326 80 326 91 342 99C359 108 370 120 365 133C363 149 348 150 336 163C325 177 309 183 288 180C266 176 253 184 231 182C206 181 194 173 173 177C149 182 135 191 111 184C93 179 82 169 66 166C46 161 32 147 38 125Z"/>
+  </defs>
+  <g class="albumen">
+    <use href="#menu-egg-edge" fill="#dfd2b4" transform="translate(0 1.5)"/>
+    <use href="#menu-egg-edge" fill="url(#menu-egg-white)"/>
+    <g class="set-white" fill="#fff" opacity=".56">
+      <path d="M51 125C61 104 83 110 99 89C111 73 131 79 141 79C124 88 115 99 106 113C92 132 64 135 51 125Z"/>
+      <path d="M231 76C256 86 279 70 301 78C319 84 322 98 337 106C311 99 303 108 283 102C263 96 245 97 231 76Z"/>
+    </g>
+  </g>
+  <g class="yolk-dome">
+    <ellipse cx="161" cy="131" rx="66" ry="34" fill="url(#menu-egg-shade)"/>
+    <path d="M105 121C105 99 126 79 153 77C180 74 205 90 210 112C216 134 196 145 170 148C139 152 107 144 105 126Z" fill="url(#menu-egg-yolk)"/>
+    <ellipse cx="139" cy="95" rx="21" ry="8" transform="rotate(-22 139 95)" fill="url(#menu-egg-light)"/>
+  </g>
+</svg>
+</div></div></div>
+<div class="fry-curtain" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" class="frying-egg" viewBox="0 0 400 225" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="route-egg-white" cx=".42" cy=".36" r=".73">
+      <stop stop-color="#fffbed"/><stop offset=".55" stop-color="#fffef9"/><stop offset=".86" stop-color="#eee9d8"/><stop offset=".96" stop-color="#e2d6b8"/><stop offset="1" stop-color="#d9c79e"/>
+    </radialGradient>
+    <radialGradient id="route-egg-yolk" cx=".36" cy=".27" r=".8">
+      <stop stop-color="#ffda67"/><stop offset=".34" stop-color="#ffc440"/><stop offset=".72" stop-color="#f9a223"/><stop offset=".95" stop-color="#e48b1c"/><stop offset="1" stop-color="#da8320"/>
+    </radialGradient>
+    <radialGradient id="route-egg-light"><stop stop-color="#fff4c5" stop-opacity=".85"/><stop offset="1" stop-color="#fff4c5" stop-opacity="0"/></radialGradient>
+    <radialGradient id="route-egg-shade"><stop stop-color="#916e34" stop-opacity=".25"/><stop offset="1" stop-color="#916e34" stop-opacity="0"/></radialGradient>
+    <path id="route-egg-edge" d="M38 125C36 112 49 100 64 95C78 90 80 76 98 68C116 60 130 67 148 63C167 59 171 47 194 49C217 50 231 64 252 65C278 66 291 60 312 72C326 80 326 91 342 99C359 108 370 120 365 133C363 149 348 150 336 163C325 177 309 183 288 180C266 176 253 184 231 182C206 181 194 173 173 177C149 182 135 191 111 184C93 179 82 169 66 166C46 161 32 147 38 125Z"/>
+  </defs>
+  <g class="albumen">
+    <use href="#route-egg-edge" fill="#dfd2b4" transform="translate(0 1.5)"/>
+    <use href="#route-egg-edge" fill="url(#route-egg-white)"/>
+    <g class="set-white" fill="#fff" opacity=".56">
+      <path d="M51 125C61 104 83 110 99 89C111 73 131 79 141 79C124 88 115 99 106 113C92 132 64 135 51 125Z"/>
+      <path d="M231 76C256 86 279 70 301 78C319 84 322 98 337 106C311 99 303 108 283 102C263 96 245 97 231 76Z"/>
+    </g>
+  </g>
+  <g class="yolk-dome">
+    <ellipse cx="161" cy="131" rx="66" ry="34" fill="url(#route-egg-shade)"/>
+    <path d="M105 121C105 99 126 79 153 77C180 74 205 90 210 112C216 134 196 145 170 148C139 152 107 144 105 126Z" fill="url(#route-egg-yolk)"/>
+    <ellipse cx="139" cy="95" rx="21" ry="8" transform="rotate(-22 139 95)" fill="url(#route-egg-light)"/>
+  </g>
+</svg>
+</div><main id="principal"><article class="detail"><div class="sample"><img width="224" height="280" src="../../assets/cascaron-xl.avif" data-turn="../../assets/cascaron-xl-giro.webp" alt="Huevo campero calibre XL"><button type="button" class="turn-control">Girar el huevo</button></div><div><a href="../../productos/">← Todos los productos</a><p class="kicker">Huevo campero · Muy grande</p><h1>Calibre <em>XL.</em></h1><p class="weight">73 g o más por huevo</p><p>Disponible en caja de docena y en formato de 6 + 6. Consulta la disponibilidad directamente con la granja.</p><a class="button" href="../../contacto/">Consultar a la granja ↗</a></div></article><section class="formats"><h2>Dos formas de llevarlos.</h2><div><h3>Caja de docena</h3><p>Doce huevos en una huevera.</p></div><div><h3>Formato 6 + 6</h3><p>Dos medias docenas en un estuche dividido.</p></div><p class="note">Trabajamos con todos los calibres. El envasado se ajusta al peso mínimo indicado en el estuche para la docena o la media docena.</p></section><section class="related"><h2>Otros <em>calibres.</em></h2><div class="eggs"><a class="egg" href="../../productos/s/"><span class="shelf"><img width="224" height="280" style="--size:62%" loading="lazy" src="../../assets/cascaron-s.avif" data-turn="../../assets/cascaron-s-giro.webp" alt=""></span><span class="eggname">Calibre S<span aria-hidden="true">↗</span></span><span>Pequeño · menos de 53 g</span></a><a class="egg" href="../../productos/m/"><span class="shelf"><img width="224" height="280" style="--size:74%" loading="lazy" src="../../assets/cascaron-m.avif" data-turn="../../assets/cascaron-m-giro.webp" alt=""></span><span class="eggname">Calibre M<span aria-hidden="true">↗</span></span><span>Mediano · 53 a menos de 63 g</span></a><a class="egg" href="../../productos/l/"><span class="shelf"><img width="224" height="280" style="--size:86%" loading="lazy" src="../../assets/cascaron-l.avif" data-turn="../../assets/cascaron-l-giro.webp" alt=""></span><span class="eggname">Calibre L<span aria-hidden="true">↗</span></span><span>Grande · 63 a menos de 73 g</span></a></div></section></main>
 <footer><div><a class="word" href="../../">El Palomar</a><p>Huevos camperos de Martín Miguel, Segovia.</p></div><nav aria-label="Pie de página"><a href="../../">Inicio</a><a href="../../productos/">Productos</a><a href="../../historia/">Historia</a><a href="../../contacto/">Contacto</a></nav></footer></body></html>

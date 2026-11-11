@@ -69,13 +69,11 @@
 
 @view-transition{navigation:none}
 .fry-curtain{position:fixed;inset:0;z-index:30;display:grid;place-items:center;background:white;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .24s ease,visibility 0s .24s}
-.frying-egg{display:block;aspect-ratio:9/5;object-fit:contain;height:auto;width:min(64vw,36rem,74svh);background:white}
+.frying-egg{display:block;aspect-ratio:9/5;object-fit:contain;height:auto;width:min(64vw,36rem,74svh);background:transparent}
 .departing .fry-curtain,.arriving .fry-curtain{opacity:1;visibility:visible;pointer-events:auto;transition-delay:0s}
-.arriving .fry-curtain video{background:white url('assets/huevo-frito.webp') center/contain no-repeat}
-.menu-film{display:grid;place-items:center}.menu-film video{width:min(100%,200px,32svh)}
+.menu-film{display:grid;place-items:center}.menu-film .frying-egg{width:min(100%,200px,32svh)}
 .mobile-sheet{background:white}
 @keyframes fry-reveal{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-@media(prefers-reduced-motion:reduce){.fry-curtain,.menu-film{transition:none;animation:none!important}.menu-film{background:white url('assets/huevo-frito.webp') center/contain no-repeat}.menu-film video{visibility:hidden}}
 
 .calibre-run{position:relative;isolation:isolate}
 .pasture{display:none}
@@ -93,20 +91,19 @@
 }
 @media(max-width:700px){.walk-enabled .pasture{background-image:linear-gradient(0deg,#233122f7,#28392388),url('assets/pradera-vertical.avif')}.pasture-next{background-image:linear-gradient(0deg,#233122f7,#28392388),url('assets/horizonte-movil.avif')}}
 .shell-model.in-flight{opacity:0}
-.departing .frying-egg,.mobile-sheet:popover-open .frying-egg{background:white url('assets/huevo-crudo.webp') center/contain no-repeat}
 .departing .frying-egg{animation:fry-reveal .32s ease both}
-@media(max-height:450px){.menu-film video{width:min(130px,26svh)}}
+@media(max-height:450px){.menu-film .frying-egg{width:min(130px,26svh)}}
 @media(max-height:479px) and (min-aspect-ratio:1/1){.calibre-layout{grid-template-columns:1fr 1fr;gap:4%;padding:42px 0 18px;text-align:left}.shell-model{height:calc(54svh * var(--proportion))}.calibre-copy .calibre-title{font-size:2.3rem;margin-bottom:5px}.calibre-copy .kicker{margin:0}.calibre-copy .calibre-weight{margin-bottom:3px}.calibre-copy .button{margin-top:8px}.calibre-chapter:nth-of-type(even) .shell-space{order:2}}
 
 @media(max-width:700px){
   .menu-body{align-self:center;width:min(100%,32rem);margin-inline:auto;display:grid;gap:clamp(12px,3.6dvh,36px)}
   .mobile-sheet nav a{min-height:clamp(52px,8.6dvh,80px);font-size:clamp(2rem,8.2vw,3.6rem)}
-  .menu-film video{width:min(72vw,300px,46dvh)}
+  .menu-film .frying-egg{width:min(72vw,300px,46dvh)}
 }
 @media(max-width:700px) and (max-height:480px) and (orientation:landscape){
   .mobile-sheet{--menu-origin:76% 55%}
   .menu-body{width:100%;grid-template-columns:1fr 1fr;align-items:center;gap:24px}
-  .menu-film video{width:min(100%,220px)}
+  .menu-film .frying-egg{width:min(100%,220px)}
   .mobile-sheet nav a{font-size:1.75rem;min-height:46px}
 }
 
@@ -114,3 +111,12 @@
 .story .portrait{background:transparent;border-radius:0;overflow:visible}
 .story-copy{position:relative}.story-copy .kicker{color:#e6ead8}.story-copy h1,.story-copy h2{font-size:clamp(3rem,5.6vw,6.5rem)}.story-copy .button{background:#f8f5ed;color:#293424}
 @media(max-width:700px){.story{background-image:linear-gradient(0deg,#19281bf0 10%,#203321cc 72%,#24332388),url('assets/horizonte-movil.avif');gap:24px}.story .portrait{padding-top:0}.story .portrait img{height:min(32svh,300px);width:auto}.story-copy h1,.story-copy h2{margin-bottom:18px}}
+@media(prefers-reduced-motion:no-preference){
+  :is(.departing .fry-curtain,.mobile-sheet:popover-open) .albumen{transform-origin:155px 117px;animation:albumen-set 1.12s cubic-bezier(.21,.68,.28,1) both}
+  :is(.departing .fry-curtain,.mobile-sheet:popover-open) .set-white{animation:white-bloom 1.08s ease-out both}
+  :is(.departing .fry-curtain,.mobile-sheet:popover-open) .yolk-dome{transform-origin:158px 137px;animation:yolk-settle .85s ease-out both}
+}
+@keyframes albumen-set{0%{opacity:.18;transform:scale(.67,.73)}45%{opacity:.76;transform:scale(.93,.95)}100%{opacity:1;transform:scale(1)}}
+@keyframes white-bloom{from{opacity:0}to{opacity:.56}}
+@keyframes yolk-settle{0%{transform:scale(.94,1.07)}65%{transform:scale(1.015,.985)}100%{transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.departing .frying-egg{animation:none}}

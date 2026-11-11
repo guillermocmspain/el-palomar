@@ -175,18 +175,6 @@ if (chapters.length) {
   animateScroll.addEventListener('change',queueChapters);
 }
 
-const curtain = document.querySelector('.fry-curtain');
-const routeFilm = curtain.querySelector('video');
-const menuFilm = mobileMenu.querySelector('video');
-function playFrying(film) {
-  if (!film.getAttribute('src')) film.src = film.dataset.src;
-  film.currentTime = 0;
-  return film.play().catch(() => {});
-}
-mobileMenu.addEventListener('toggle', event => {
-  if (event.newState === 'open' && !reduced.matches) playFrying(menuFilm);
-  else menuFilm.pause();
-});
 let leaving = false;
 document.addEventListener('click', event => {
   const link = event.target.closest?.('a[href]');
@@ -204,13 +192,10 @@ document.addEventListener('click', event => {
     try {sessionStorage.setItem('palomar-arrival', String(Date.now()));} catch {}
     location.assign(destination.href);
   };
-  routeFilm.addEventListener('ended',go,{once:true});
-  playFrying(routeFilm);
-  setTimeout(go,1550);
+  setTimeout(go,1230);
 });
 function clearCurtain() {
   leaving = false;
-  routeFilm.pause();
   document.documentElement.classList.remove('arriving','departing');
 }
 window.addEventListener('pageshow',()=>requestAnimationFrame(()=>requestAnimationFrame(clearCurtain)));
