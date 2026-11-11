@@ -20,6 +20,8 @@ def page(route, title, description, content):
     regions = [(395, 0, 390, 26), (0, 46, 252, 66), (265, 46, 348, 66), (630, 46, 151, 66), (785, 46, 181, 66), (968, 46, 212, 66)]
     stacked = ''.join(f'<svg viewBox="{x} {y} {w} {h}" width="{w}" height="{h}" aria-hidden="true"><image href="{banner}" width="1180" height="112"/></svg>' for x,y,w,h in regions)
     body_class = 'home' if not route else 'inside'
+    if route.startswith('productos/'):
+        body_class += ' product-page'
     css = (ROOT/'style.css').read_text(encoding='utf-8').replace("url('assets/", f"url('{prefix}assets/")
     egg = (ROOT/'assets/coccion.svg').read_text(encoding='utf-8')
     brand = f'<a class="brand-link" href="{prefix}" aria-label="El Palomar, inicio"><img src="{prefix}assets/el-palomar.svg" width="1272" height="759" alt="El Palomar"></a>'
@@ -29,7 +31,7 @@ def page(route, title, description, content):
 <noscript><style>.scroll-scene{{height:auto}}.sticky{{position:relative}}.sticky>.intro,.pause{{display:none}}.home .top{{position:sticky;left:auto;transform:none;visibility:visible}}.scrolled .center{{visibility:visible}}</style></noscript><title>{title} · El Palomar</title><meta name="description" content="{escape(description)}"><link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml"><style>{css}</style><script defer src="{prefix}app.js?v=cabecera"></script></head>
 <body class="{body_class}"><a class="skip" href="#principal">Saltar al contenido</a><header class="top">{brand}<nav aria-label="Principal">{navigation}</nav></header>
 <button class="burger" type="button" popovertarget="mobile-menu" aria-label="Menú principal" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
-<div class="mobile-sheet" id="mobile-menu" popover="auto"><div class="sheet-head">{brand}<button type="button" class="sheet-close" autofocus aria-label="Cerrar menú" popovertarget="mobile-menu" popovertargetaction="hide">×</button></div><div class="menu-body"><nav aria-label="Menú móvil">{navigation}</nav><div class="menu-film">{menu_egg}</div></div></div>
+<div class="mobile-sheet" id="mobile-menu" popover="auto"><div class="sheet-head"><button type="button" class="sheet-close" autofocus aria-label="Cerrar menú" popovertarget="mobile-menu" popovertargetaction="hide">×</button></div><div class="menu-body"><nav aria-label="Menú móvil">{navigation}</nav><div class="menu-film">{menu_egg}</div></div></div>
 <main id="principal">{content.replace('@/',prefix)}</main>
 <footer><div class="footer-main"><div><a class="word" href="{prefix}">El Palomar</a><p>Huevos camperos de Martín Miguel, Segovia.</p></div><nav aria-label="Pie de página">{navigation}</nav></div>
 <nav class="legal-links" aria-label="Información legal">{legal_nav}</nav>
