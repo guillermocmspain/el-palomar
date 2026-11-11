@@ -6,24 +6,28 @@ if (scene) {
   const portrait = matchMedia('(max-aspect-ratio: 1/1)');
   const phone = matchMedia('(max-aspect-ratio: 5/8)');
   const pause = scene.querySelector('.pause');
-  let paused = reduced.matches;
-  pause.addEventListener('click', () => {
-    paused = !paused;
+  let paused = reduced.matches || Boolean(navigator.connection?.saveData);
+  function labelMotion() {
     pause.textContent = paused ? '▶' : 'Ⅱ';
     pause.setAttribute('aria-label', paused ? 'Reproducir movimiento' : 'Pausar movimiento');
+  }
+  labelMotion();
+  pause.addEventListener('click', () => {
+    paused = !paused;
+    labelMotion();
     ready=true;refreshVideo();
   });
   let pending = false;
   let active = true;
   let ready = false;
   function refreshVideo() {
-    if (!ready || !active || paused || document.hidden || navigator.connection?.saveData) {
+    if (!ready || !active || paused || document.hidden) {
       video.pause();
       return;
     }
     const source = phone.matches ? video.dataset.phone : portrait.matches ? video.dataset.tall : video.dataset.wide;
     if (video.getAttribute('src') !== source) video.src = source;
-    video.play().catch(() => {});
+    video.play().catch(error => { if(error.name==='NotAllowedError'){paused=true;labelMotion();} });
   }
   video.addEventListener('playing', () => video.classList.add('playing'));
   function paint() {
@@ -48,13 +52,13 @@ if (scene) {
   addEventListener('pageshow',schedule);
   portrait.addEventListener('change',refreshVideo);
   phone.addEventListener('change',refreshVideo);
-  reduced.addEventListener('change',()=>{paused=reduced.matches;refreshVideo();});
+  reduced.addEventListener('change',()=>{paused=reduced.matches;labelMotion();refreshVideo();});
   document.addEventListener('visibilitychange',refreshVideo);
   new IntersectionObserver(([entry]) => { active = entry.isIntersecting; refreshVideo(); }).observe(scene);
   paint();
   function startMotion(){ready=true;refreshVideo();}
   for (const event of ['pointermove','touchstart','keydown']) addEventListener(event,startMotion,{once:true,passive:true});
-  addEventListener('load', () => { if(!navigator.connection || navigator.connection.downlink>3) startMotion(); });
+  addEventListener('load', startMotion);
 }
 const eggs=document.querySelectorAll('[data-turn]');
 const animation=new IntersectionObserver(entries=>{

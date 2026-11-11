@@ -15,7 +15,7 @@ def page(route, title, description, content):
     body_class = 'home' if not route else 'inside'
     document = f'''<!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8f5ed">
-<title>{title} · El Palomar</title><meta name="description" content="{escape(description)}"><link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml"><style>{(ROOT/"style.css").read_text(encoding="utf-8")}</style><script defer src="{prefix}app.js"></script></head>
+<noscript><style>.scroll-scene{{height:auto}}.sticky{{position:relative}}.sticky>.intro,.pause{{display:none}}.home .top{{position:sticky;left:auto;transform:none;visibility:visible}}.scrolled .center{{visibility:visible}}</style></noscript><title>{title} · El Palomar</title><meta name="description" content="{escape(description)}"><link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml"><style>{(ROOT/"style.css").read_text(encoding="utf-8")}</style><script defer src="{prefix}app.js"></script></head>
 <body class="{body_class}"><a class="skip" href="#principal">Saltar al contenido</a><header class="top"><a class="word" href="{prefix}">El Palomar</a><nav aria-label="Principal">{navigation}</nav></header>
 <main id="principal">{content.replace('@/',prefix)}</main>
 <footer><div><a class="word" href="{prefix}">El Palomar</a><p>Huevos camperos de Martín Miguel, Segovia.</p></div><nav aria-label="Pie de página">{navigation}</nav></footer></body></html>'''
