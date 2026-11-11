@@ -4,15 +4,24 @@ if (scene) {
   const panel = scene.querySelector('.landscape');
   const video = scene.querySelector('video');
   const portrait = matchMedia('(max-aspect-ratio: 1/1)');
+  const phone = matchMedia('(max-aspect-ratio: 5/8)');
+  const pause = scene.querySelector('.pause');
+  let paused = reduced.matches;
+  pause.addEventListener('click', () => {
+    paused = !paused;
+    pause.textContent = paused ? '▶' : 'Ⅱ';
+    pause.setAttribute('aria-label', paused ? 'Reproducir movimiento' : 'Pausar movimiento');
+    ready=true;refreshVideo();
+  });
   let pending = false;
   let active = true;
   let ready = false;
   function refreshVideo() {
-    if (!ready || !active || reduced.matches || document.hidden || navigator.connection?.saveData) {
+    if (!ready || !active || paused || document.hidden || navigator.connection?.saveData) {
       video.pause();
       return;
     }
-    const source = portrait.matches ? video.dataset.tall : video.dataset.wide;
+    const source = phone.matches ? video.dataset.phone : portrait.matches ? video.dataset.tall : video.dataset.wide;
     if (video.getAttribute('src') !== source) video.src = source;
     video.play().catch(() => {});
   }
@@ -20,13 +29,14 @@ if (scene) {
   function paint() {
     const height = panel.clientHeight;
     const width = panel.clientWidth;
-    const progress = Math.min(1, Math.max(0, scrollY / Math.max(1, scene.offsetHeight - scene.firstElementChild.offsetHeight)));
+    const progress = Math.min(1, Math.max(0, scrollY / Math.max(1, scene.offsetHeight - scene.firstElementChild.offsetHeight) * 1.4));
     const diameter = Math.min(height,width);
     const inset = dim => 50 * (1 - diameter / dim) * Math.min(1, progress * 1.8) + 50 * diameter / dim * Math.max(0,(progress - 1/1.8)/(1 - 1/1.8));
     panel.style.setProperty('--h', inset(width) + '%');
     panel.style.setProperty('--v', inset(height) + '%');
     panel.style.setProperty('--r', (24 + progress * diameter) + 'px');
     scene.style.setProperty('--copy', Math.max(0, 1-progress*5));
+    scene.style.setProperty('--intro', Math.max(0,(progress-.95)*20));
     document.body.classList.toggle('scrolled', progress > .17);
     pending = false;
   }
@@ -37,11 +47,14 @@ if (scene) {
   addEventListener('resize',schedule);
   addEventListener('pageshow',schedule);
   portrait.addEventListener('change',refreshVideo);
-  reduced.addEventListener('change',refreshVideo);
+  phone.addEventListener('change',refreshVideo);
+  reduced.addEventListener('change',()=>{paused=reduced.matches;refreshVideo();});
   document.addEventListener('visibilitychange',refreshVideo);
   new IntersectionObserver(([entry]) => { active = entry.isIntersecting; refreshVideo(); }).observe(scene);
   paint();
-  addEventListener('load', () => { setTimeout(() => {ready=true;refreshVideo();},1400); });
+  function startMotion(){ready=true;refreshVideo();}
+  for (const event of ['pointermove','touchstart','keydown']) addEventListener(event,startMotion,{once:true,passive:true});
+  addEventListener('load', () => { if(!navigator.connection || navigator.connection.downlink>3) startMotion(); });
 }
 const eggs=document.querySelectorAll('[data-turn]');
 const animation=new IntersectionObserver(entries=>{

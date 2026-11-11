@@ -1,7 +1,7 @@
 """Generate the static GitHub Pages routes with Python 3."""
 from pathlib import Path
 from html import escape
-import os
+
 
 ROOT = Path(__file__).resolve().parent
 NAV = [('', 'Inicio'), ('productos', 'Productos'), ('historia', 'Historia'), ('contacto', 'Contacto')]
@@ -15,7 +15,7 @@ def page(route, title, description, content):
     body_class = 'home' if not route else 'inside'
     document = f'''<!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8f5ed">
-<title>{title} · El Palomar</title><meta name="description" content="{escape(description)}"><link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="{prefix}style.css"><script defer src="{prefix}app.js"></script></head>
+<title>{title} · El Palomar</title><meta name="description" content="{escape(description)}"><link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml"><style>{(ROOT/"style.css").read_text(encoding="utf-8")}</style><script defer src="{prefix}app.js"></script></head>
 <body class="{body_class}"><a class="skip" href="#principal">Saltar al contenido</a><header class="top"><a class="word" href="{prefix}">El Palomar</a><nav aria-label="Principal">{navigation}</nav></header>
 <main id="principal">{content.replace('@/',prefix)}</main>
 <footer><div><a class="word" href="{prefix}">El Palomar</a><p>Huevos camperos de Martín Miguel, Segovia.</p></div><nav aria-label="Pie de página">{navigation}</nav></footer></body></html>'''
@@ -33,11 +33,11 @@ def catalog():
 story='''<section class="story"><div class="portrait"><img width="375" height="750" loading="lazy" src="@/assets/gallina.webp" alt="Gallina de plumaje cobrizo de El Palomar"></div><div><p class="kicker">Nuestra historia</p><h2>Todo empieza en <em>Martín Miguel.</em></h2><p>En este pueblo de Segovia nace El Palomar. El proyecto recupera una forma cercana de producir huevos, con el cuidado diario de las gallinas en el centro.</p><a class="button" href="@/historia/">Conocer la historia <span>↗</span></a></div></section>'''
 formats='''<section class="formats"><h2>Dos formas de llevarlos.</h2><div><h3>Caja de docena</h3><p>Doce huevos en una huevera.</p></div><div><h3>Formato 6 + 6</h3><p>Dos medias docenas en un estuche dividido.</p></div><p class="note">Trabajamos con todos los calibres. El envasado se ajusta al peso mínimo indicado en el estuche para la docena o la media docena.</p></section>'''
 intro='''<section class="intro" id="proyecto"><p class="kicker">El proyecto</p><h2>Del campo<br><em>a la mesa.</em></h2><p>En El Palomar criamos gallinas camperas en Martín Miguel, Segovia. Cuidamos su alimentación y su entorno a lo largo de todo el ciclo de cría.</p></section>'''
-hero='''<div class="scroll-scene"><section class="sticky"><div class="landscape"><picture><source media="(max-aspect-ratio: 1/1)" srcset="@/assets/portada-movil.webp"><img fetchpriority="high" width="1440" height="810" src="@/assets/portada-campo.webp" alt="Dos gallinas, una moteada y otra cobriza, en el campo"></picture><video muted playsinline loop preload="none" aria-hidden="true" data-wide="@/assets/campo.mp4" data-tall="@/assets/movil.mp4"></video><div class="shade"></div></div>
+hero='''<div class="scroll-scene"><section class="sticky"><div class="landscape"><picture><source media="(max-aspect-ratio: 5/8)" srcset="@/assets/portada-telefono.webp"><source media="(max-aspect-ratio: 1/1)" srcset="@/assets/portada-movil.webp"><img fetchpriority="high" width="1440" height="810" src="@/assets/portada-campo.webp" alt="Dos gallinas, una moteada y otra cobriza, en el campo"></picture><video muted playsinline loop preload="none" aria-hidden="true" data-phone="@/assets/telefono.mp4" data-wide="@/assets/campo.mp4" data-tall="@/assets/movil.mp4"></video><div class="shade"></div></div>
 <div class="hero-copy"><p class="place">Martín Miguel <span> / </span> Segovia</p><h1>Huevos <em>camperos.</em></h1></div>
 <nav class="center" aria-label="Portada"><a href="@/productos/">Productos</a><a class="brand" href="@/" aria-label="El Palomar, inicio"><img src="@/assets/marca.webp" width="340" height="58" alt="El Palomar"></a><a href="@/historia/">Historia</a></nav>
-<a class="down" href="#proyecto" aria-label="Descubrir el proyecto">↓</a></section></div>'''
-page('', 'Huevos camperos de Martín Miguel', 'Descubre El Palomar, su historia y su catálogo de huevos camperos en cuatro calibres.', hero+intro+'<section class="collection"><p class="kicker">Nuestros productos</p><h2>Cuatro <em>calibres.</em></h2><p>Del más pequeño al más grande. Elige un huevo para ver su peso y sus formatos.</p>'+catalog()+'</section>'+story)
+<button class="pause" type="button" aria-label="Pausar movimiento">Ⅱ</button><a class="down" href="#presentacion" aria-label="Descubrir el proyecto">↓</a></section><span id="presentacion"></span></div>'''
+page('', 'Huevos camperos de Martín Miguel', 'Descubre El Palomar, su historia y su catálogo de huevos camperos en cuatro calibres.', hero.replace('<div class="landscape">',intro+'<div class="landscape">')+'<section class="collection"><p class="kicker">Nuestros productos</p><h2>Cuatro <em>calibres.</em></h2><p>Del más pequeño al más grande. Elige un huevo para ver su peso y sus formatos.</p>'+catalog()+'</section>'+story)
 page('productos','Productos','Catálogo de huevos camperos S, M, L y XL con pesos y formatos de envasado.','<section class="collection"><p class="kicker">El catálogo</p><h1>Nuestros <em>huevos.</em></h1><p>Cuatro calibres, ordenados por peso. Elige el tuyo para ver su ficha.</p>'+catalog()+'</section>'+formats)
 for size, weight, kind in SIZES:
     slug=size.lower()
