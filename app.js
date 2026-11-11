@@ -95,7 +95,44 @@ window.addEventListener('pageshow',dismissMobileMenu);
 
 const chapters = [...document.querySelectorAll('.calibre-chapter')];
 if (chapters.length) {
-  const animateScroll = matchMedia('(prefers-reduced-motion:no-preference) and (min-height:480px)');
+  const animateScroll = matchMedia('(prefers-reduced-motion:no-preference) and (min-height:300px)');
+  const pasture = document.querySelector('.pasture');
+  const models = chapters.map(chapter => chapter.querySelector('.shell-model'));
+  const flight = document.createElement('div');
+  flight.className = 'egg-flight';
+  flight.hidden = true;
+  flight.setAttribute('aria-hidden','true');
+  const surfaces = [new Image(), new Image()];
+  surfaces.forEach(image => { image.alt=''; flight.append(image); });
+  document.body.append(flight);
+  let currentPair = -1;
+  function handoff(index, progress, height) {
+    if (currentPair !== index) {
+      models.forEach(model => model.classList.remove('in-flight'));
+      currentPair = index;
+      flight.hidden = index < 0;
+      if (index >= 0) surfaces.forEach((image, offset) => {
+        const model = models[index+offset];
+        image.src = model.querySelector('img').src;
+        model.classList.add('in-flight');
+      });
+    }
+    if (index < 0) return;
+    const a = models[index].getBoundingClientRect();
+    const b = models[index+1].getBoundingClientRect();
+    const t = progress, blend = t*t*(3-2*t);
+    const mix = (start,end) => start+(end-start)*blend;
+    const width=mix(a.width,b.width), eggHeight=mix(a.height,b.height);
+    const x=mix(a.left+a.width/2,b.left+b.width/2)-width/2;
+    const arc=Math.sin(Math.PI*t);
+    const y=mix(a.top+t*height+a.height/2,b.top-(1-t)*height+b.height/2)-eggHeight/2
+      +Math.min(125,height*.14)*arc*arc;
+    flight.style.width=width+'px';
+    flight.style.height=eggHeight+'px';
+    flight.style.transform='translate3d('+x+'px,'+y+'px,0) rotate('+(-7*arc)+'deg)';
+    const skin=Math.min(1,Math.max(0,(t-.25)/.5));
+    surfaces[1].style.opacity=skin*skin*(3-2*skin);
+  }
   let scheduled = false;
   function drawChapters() {
     scheduled = false;
@@ -115,6 +152,19 @@ if (chapters.length) {
       chapter.style.setProperty('--grow', (.64 + .48 * ease).toFixed(4));
       chapter.style.setProperty('--rise', ((1-ease)*Math.min(112,viewport*.12)).toFixed(1)+'px');
     }
+    let pair=-1, transition=0;
+    const height=chapters[0].firstElementChild.offsetHeight;
+    if (animateScroll.matches) {
+      const second=chapters[1].getBoundingClientRect().top;
+      pasture.style.setProperty('--field-mix',Math.max(0,Math.min(1,1-second/height)));
+      const span=chapters[3].offsetTop-chapters[1].offsetTop+height;
+      pasture.style.setProperty('--field-pan',Math.max(0,Math.min(100,100*(height-second)/span))+'%');
+      for(let i=1;i<chapters.length;i++){
+        const top=chapters[i].getBoundingClientRect().top;
+        if(top>0 && top<height){pair=i-1;transition=1-top/height;break;}
+      }
+    }
+    handoff(pair,transition,height);
   }
   function queueChapters() {
     if (!scheduled) { scheduled=true; requestAnimationFrame(drawChapters); }
@@ -124,3 +174,43 @@ if (chapters.length) {
   addEventListener('resize',queueChapters);
   animateScroll.addEventListener('change',queueChapters);
 }
+
+const curtain = document.querySelector('.fry-curtain');
+const routeFilm = curtain.querySelector('video');
+const menuFilm = mobileMenu.querySelector('video');
+function playFrying(film) {
+  if (!film.getAttribute('src')) film.src = film.dataset.src;
+  film.currentTime = 0;
+  return film.play().catch(() => {});
+}
+mobileMenu.addEventListener('toggle', event => {
+  if (event.newState === 'open' && !reduced.matches) playFrying(menuFilm);
+  else menuFilm.pause();
+});
+let leaving = false;
+document.addEventListener('click', event => {
+  const link = event.target.closest?.('a[href]');
+  if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.hasAttribute('download') || (link.target && link.target !== '_self') || reduced.matches) return;
+  const destination = new URL(link.href);
+  if (destination.origin !== location.origin || destination.pathname === location.pathname) return;
+  event.preventDefault();
+  if (leaving) return;
+  leaving = true;
+  dismissMobileMenu();
+  document.documentElement.classList.add('departing');
+  const go = () => {
+    if (!leaving) return;
+    leaving = false;
+    try {sessionStorage.setItem('palomar-arrival', String(Date.now()));} catch {}
+    location.assign(destination.href);
+  };
+  routeFilm.addEventListener('ended',go,{once:true});
+  playFrying(routeFilm);
+  setTimeout(go,1550);
+});
+function clearCurtain() {
+  leaving = false;
+  routeFilm.pause();
+  document.documentElement.classList.remove('arriving','departing');
+}
+window.addEventListener('pageshow',()=>requestAnimationFrame(()=>requestAnimationFrame(clearCurtain)));
